@@ -58,7 +58,7 @@ public class SplashActivity extends BaseEPMIActivity {
         objectAnimator03.setInterpolator(new DecelerateInterpolator(10));
         objectAnimator03.setStartDelay(1400);
 
-        ObjectAnimator objectAnimator04 = ObjectAnimator.ofFloat(this.clef01ImageView, "rotation", 0, 10);
+        ObjectAnimator objectAnimator04 = ObjectAnimator.ofFloat(this.clef01ImageView, "rotation", 0, 8);
         objectAnimator04.setInterpolator(new DecelerateInterpolator(10));
         objectAnimator04.setStartDelay(1600);
 
