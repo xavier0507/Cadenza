@@ -1,0 +1,25 @@
+<resources>
+
+    <!-- Exception -->
+    <string name="exception_no_tool_bar">無法找到Tool Bar!</string>
+    <string name="exception_no_media_tab_layout">無法找到TabLayout!</string>
+    <string name="exception_no_media_media_view_pager">無法找到ViewPager!</string>
+
+    <string name="exception_no_composer_original_name">無法找到原文名字!</string>
+    <string name="exception_no_composer_translation_name">無法找到譯名!</string>
+    <string name="exception_no_composer_play_list">無法找到作品列表!</string>
+    <string name="exception_no_composer_photo">無法找到圖片!</string>
+
+    <string name="exception_youtube_player_view_child_less_than_two">YoutubePlayerViewGroup至少要存在兩個子視圖!</string>
+    <string name="exception_youtube_player_view_no_id">YoutubePlayerViewGroup要存在youtube_player_view id!</string>
+
+    <string name="exception_list_null_size">List不能為空物件!</string>
+    <string name="exception_adapter_null">RecyclerView不能為空物件!</string>
+
+    <!-- Toast Message -->
+    <string name="toast_check_account_is_device_online">請確認是否連接網路。</string>
+    <string name="toast_check_account_login_success">登入Google帳號成功。</string>
+    <string name="toast_check_account_need_google_play_service">Cadenza需要Google Play Services。請在您的手機上安裝並重新啟動Cadenza。</string>
+    <string name="toast_check_account_need_account_picker_fail">Cadenza需要您登入Google帳號，才能存取服務。</string>
+
+</resources>

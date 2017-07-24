@@ -1,0 +1,181 @@
+<resources>
+
+    <string name="app_name">Cadenza</string>
+
+    <array name="main_list">
+        <item>時期經典，無內容，無內容，無內容</item>
+
+        <item>Baroque，巴洛克音樂，http://www.limelightmagazine.com.au/sites/www.limelightmagazine.com.au/files/viol_guitar_FrancoisPuget_Musicians_LouisXIVcourt_Jean-Baptiste-Lully-lute_1687_deta.jpg，PLOEZfHSao19UGDhI5evWOAOi0oZXCh8jg</item>
+        <item>Classicalism，古典主義，https://images.fineartamerica.com/images-medium-large-5/string-quartet-granger.jpg，PLOEZfHSao19WeMAteOHmEhEh159FqOPQz</item>
+        <item>Romanticism，浪漫主義，http://radioopensource.org/wp-content/uploads/2015/07/10ed71c309fb14c9d2fce197bacb0816.jpg，PLOEZfHSao19U8Op4Tc7v1IoFG7sH1BxF3</item>
+        <item>20th-Century，二十世紀，https://s-media-cache-ak0.pinimg.com/736x/70/ff/1b/70ff1bc2d37862a8a4b4d87b9416054d.jpg，PLOEZfHSao19UiUVnbF7BixtfkZDYomIjM</item>
+
+        <item>樂器類型，無內容，無內容，無內容</item>
+
+        <item>Piano，鋼琴作品，https://s-media-cache-ak0.pinimg.com/564x/09/ec/0e/09ec0e420911e35d709cfff8479b5619.jpg，PLOEZfHSao19Vnatl1QroNB0HAnVz643kj</item>
+        <item>Violin，小提琴作品，https://images-na.ssl-images-amazon.com/images/I/51li3v3FLlL._SX355_.jpg，PLOEZfHSao19WpQc5dNQPc3ZuC7CztR717</item>
+        <item>Cello，大提琴作品，https://s-media-cache-ak0.pinimg.com/236x/f3/4f/46/f34f46b17f547b2a325f49372ac04420--cello-art-cello-music.jpg，PLOEZfHSao19UsKoblgrw-1otoodGXiuwF</item>
+        <item>Flute，長笛作品，http://www.wikigallery.org/paintings/305501-306000/305511/painting1.jpg，PLOEZfHSao19W_l1MwFA0kEFPCDc9QZhKV</item>
+        <item>Clarinet，豎笛作品，https://s-media-cache-ak0.pinimg.com/originals/e9/be/f9/e9bef9f90d4b22fd9526647c4aea48c2.jpg，PLOEZfHSao19XM9Bevc9ZK8nQWZ1MbySQL</item>
+        <item>Horn，法國號作品，https://img1.etsystatic.com/171/0/14745566/il_340x270.1214910781_4kkc.jpg，PLOEZfHSao19VPzKlBhI1o_wMs38_Nqo-I</item>
+
+        <item>表演與配樂，無內容，無內容，無內容</item>
+
+        <item>Score，配樂，https://i.ytimg.com/vi/9aytgsS4JFE/hqdefault.jpg，PLOEZfHSao19VTX9uDVB55Ztn0fWbK57tq</item>
+        <item>Musicals，音樂劇，http://d0cdn.artquid.com/art/1/195/115502.558907144.1.575.jpg，PLOEZfHSao19WI23pIzEaofrs9dqONU8OH</item>
+        <item>Opera，歌劇，https://www.absolutearts.com/portfolio3/a/alisoncaltrider/Lady_of_the_Opera_Varga-1270224628.jpg，PLOEZfHSao19WQ5sBXHYDHQc-aA4gHnAu2</item>
+        <item>Lieder，藝術歌曲，http://www.franz-schubert-gesellschaft.at/typo3temp/pics/910b0c05f7.jpg，PLOEZfHSao19Wf5sI5ro6fofyLOxxjXUyS</item>
+
+        <item>音樂家，無內容，無內容，無內容</item>
+
+        <item>Albeniz，阿爾班尼士，https://i.ytimg.com/vi/jq0O3hMWQDs/hqdefault.jpg，PLOEZfHSao19VduitdH5zXo5Nptx6EdPf0</item>
+        <item>Bach，巴哈，http://cps-static.rovicorp.com/3/JPG_400/MI0003/738/MI0003738578.jpg?partner=allrovi.com，PLOEZfHSao19WGD0K865qQY2YRwnvtxaYZ</item>
+        <item>Beethoven，貝多芬，https://i.ytimg.com/vi/c1emWCmDpVI/hqdefault.jpg，PLOEZfHSao19XMSkGfw72ZS-EsNR5JNkhZ</item>
+        <item>Brahms，布拉姆斯，https://i.ytimg.com/vi/6yy3eQwu63A/hqdefault.jpg，PLOEZfHSao19WBWigu59TlSBsk6lsiSTJ9</item>
+        <item>Bizet，比才，http://i1181.photobucket.com/albums/x424/nethryk/Volume%204/Georges_Bizet-Crop.jpg，PLOEZfHSao19W8xyXmiWVHG8TPegZn72dE</item>
+        <item>Bartok，巴爾托克，https://upload.wikimedia.org/wikipedia/commons/6/66/Bartók_Béla_1927.jpg，PLOEZfHSao19XTw8GTIBL2DJO6MZthFb7e</item>
+        <item>Barber，巴伯，http://www.portalestoria.net/IMAGES%20256/samuel-barber.jpg，PLOEZfHSao19VLr39JLiS_Z7kundiwhkD6</item>
+        <item>Berlioz，白遼士，http://thelistenersclub.com/wp-content/uploads/sites/2/2015/10/img01.jpg，PLOEZfHSao19Wd28bYTwI_teezpFvbvsDn</item>
+        <item>Bruch，布魯赫，http://www.classicalcicerone.com/illustrations/max-bruch.jpg，PLOEZfHSao19Xurkdfmx9oJWZXgs7B_q34</item>
+        <item>Chopin，蕭邦，https://i.ytimg.com/vi/-gDinVAmtA0/hqdefault.jpg，PLOEZfHSao19X9BIZK1cneBZhWnbkRviFl</item>
+
+        <item>Debussy，德布西，https://i.ytimg.com/vi/Ir8snfWIU2M/hqdefault.jpg，PLOEZfHSao19UGm2eGjA8wAu2BYrsIRn4C</item>
+        <item>Dohnanyi，杜南伊，https://media1.britannica.com/eb-media/57/24457-004-5E867509.jpg，PLOEZfHSao19X6evN7j3rc6TpsiVDLlXer </item>
+        <item>Dvorak，德弗札克，http://vmiremusiki.ru/wp-content/uploads/2011/12/Антонин-Дворжак.jpg，PLOEZfHSao19VFs4XfjqWkS6gARArev_kj </item>
+        <item>Elgar，艾爾加，https://i.ytimg.com/vi/jrCBIwGkN8Q/hqdefault.jpg，PLOEZfHSao19VY8m-ALdZDVtYD0ah_jKDT</item>
+        <item>Franck，法朗克，https://www.pianostreet.com/search/images_tn/composers/franck.jpg，PLOEZfHSao19Us4VybnAqoynGOrN105DHy</item>
+        <item>Faure，佛瑞，https://www.pianostreet.com/search/images_tn/composers/faure.jpg，PLOEZfHSao19UGjzAcoUhgklITOQ6Gd7Hb</item>
+        <item>Grieg，葛利格，https://i.ytimg.com/vi/4R11ns5rAMY/hqdefault.jpg，PLOEZfHSao19WDQ6CKBb4FFRLTFdXnWKUJ</item>
+        <item>Granados，葛拉納多斯，http://ekladata.com/qCo26uZxUXubchMdU1OVdvEdIVg.jpg，PLOEZfHSao19WHjLuXu4CT9IZ9pxmH-Yzz</item>
+        <item>Glazunov，葛拉祖諾夫，http://www.belcantofund.com/upload/iblock/11e/11e0fcfbed8f434b62d8780a2da9f6b3.jpg，PLOEZfHSao19VL1yvXztvKG_fokSNQzSIX</item>
+        <item>Handel，韓德爾，https://upload.wikimedia.org/wikipedia/commons/thumb/3/3d/Haendel.jpg/170px-Haendel.jpg，PLOEZfHSao19UDlTbLBVVlyh3rG0ra2b01</item>
+
+        <item>Haydn，海頓，http://www.larouche.se/svenska/media/01_joseph-haydn_0.jpg，PLOEZfHSao19VPD1BogyzlpNRfEcJ7zIw7</item>
+        <item>Janacek，楊納捷克，http://www.czechmusic.net/klasika/janacek3.jpg，PLOEZfHSao19WDOPo2n9RYw2z7ruLg-QuV</item>
+        <item>Khachaturian，哈查都量，https://www.8notes.com/images/artists/khachaturian.jpg，PLOEZfHSao19UgfQC1M9wco1ecBDnxhDCO</item>
+        <item>Kreisler，克萊斯勒，http://www.violinstudent.com/images/kreisler.jpg，PLOEZfHSao19WXGHrXqssuoCQDCRXTpH3v</item>
+        <item>Liszt，李斯特，http://www.musiciansemergencyfund.org/FranzLiszt.jpg，PLOEZfHSao19UUNtwD6_cuqeu54GuWL9Rr</item>
+        <item>Lalo，拉羅，https://media1.britannica.com/eb-media/25/10325-004-8E0E6270.jpg，PLOEZfHSao19VEnBQdw8tLKmWZUnSeAjbb</item>
+        <item>Mozart，莫札特，https://a3-images.myspacecdn.com/images03/33/3ada2f9a02a347b284c14bfb6c675cd7/300x300.jpg，PLOEZfHSao19WAin06f6SzOakZam5gWXgO</item>
+        <item>Mendelssohn，孟德爾頌，https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/Felix_Mendelssohn_Bartholdy.jpg/220px-Felix_Mendelssohn_Bartholdy.jpg，PLOEZfHSao19UJgYkc447nyM_f9ePs16Uz</item>
+        <item>Massenet，馬斯奈，http://www.classiquenews.com/images/festival_jule_massenet_ariane1906.jpg，PLOEZfHSao19WwfCZMCuJUyY-YB5Oh-qeq</item>
+        <item>Mussorgsky，穆索斯基，http://q.likesuccess.com/128/6382052-modest-mussorgsky.jpg，PLOEZfHSao19UI061este9jKcUZvaDLUdu</item>
+
+        <item>Mahler，馬勒，http://www.lamusiqueclassique.com/wp-content/uploads/2011/02/Mahler.jpg，PLOEZfHSao19WcdAQWIiqGFLz40xRRcF6o</item>
+        <item>MacDowell，麥克道爾，https://s3.amazonaws.com/images.sheetmusicdirect.com/Contributor/6bcbe65a-f7cb-4088-9883-c817a6458d6e/large.jpg，PLOEZfHSao19UOJs9G2Iimt663tjZQQ_Ck</item>
+        <item>Prokofiev，普羅高菲夫，https://3.bp.blogspot.com/-d6l0OS-tmIU/WQSH6D8JMGI/AAAAAAAAAO8/fne1iFzryPAOmSEA4XvBLvCn71k4r7FGQCLcB/s320/Prokofiev.jpg，PLOEZfHSao19W_Bh_eZ6sMgopCuroF9W0t</item>
+        <item>Paganini，帕格尼尼，http://1.bp.blogspot.com/-Z44A4inq5IA/ULTZlMSKb_I/AAAAAAAABjc/ec3il4jdrJQ/s1600/Niccol-Paganini.jpg，PLOEZfHSao19VyJhTrLG0CxXG3ThP_8x4G</item>
+        <item>Piazzolla，皮亞佐拉，http://www.novostimira.com.ua/userfiles/image/anastasia/24969377.jpg，PLOEZfHSao19XyLdXTl3b9wud_2XIF3zCk</item>
+        <item>Poulenc，普朗克，http://s3.amazonaws.com/static.musicsalesclassical.com/images/composer/img-1241.jpg，PLOEZfHSao19UKJ8P3fc1Ig9IZuyqPkhjo</item>
+        <item>Rachmaninoff，拉赫曼尼諾夫，http://static2.s-trojmiasto.pl/zdj/c/9/21/250x0/216517-Profesorowie-moskiewskiego-konserwatorium-uznali-opere-Aleko.jpg，PLOEZfHSao19U1ACqIERnVlaLkIKDSlpUl</item>
+        <item>Ravel，拉威爾，http://4.bp.blogspot.com/-oZMsve3uOpw/VbOt59UuiDI/AAAAAAAAAv8/2jNopNTWM1k/s1600/Ravel.jpg，PLOEZfHSao19VNjs-hpEgSGQTBmhR8_T1N</item>
+        <item>Rimsky-Korsakov，林姆斯基，https://content.muzik-online.com/files/people/2012102316572839.jpg，PLOEZfHSao19UTfvowUjhPHK-QUsPnybLK</item>
+        <item>Rossini，羅西尼，http://www.musicacolta.eu/mc/wp-content/uploads/2015/04/rossini_ga.jpg，PLOEZfHSao19UN14YsRnPWTQOA55271x9g</item>
+
+        <item>Schubert，舒伯特，http://www.favorite-classical-composers.com/images/xfranz-schubert.jpg.pagespeed.ic.aYzxluxRIQ.jpg，PLOEZfHSao19V1a8QcqJqGnR18SvCOXpug</item>
+        <item>Schumann，舒曼，https://s-media-cache-ak0.pinimg.com/236x/e5/3d/9a/e53d9ad09881e115609d2dfb68c62614--biographies-robert-richard.jpg，PLOEZfHSao19W5CZozGUmkaWAp9LWArlFC</item>
+        <item>Smetana，史麥塔納，https://upload.wikimedia.org/wikipedia/commons/thumb/8/86/Smetana-old-age.jpg/170px-Smetana-old-age.jpg，PLOEZfHSao19U5zOYVuCb7VbZDR-t1pn5Y</item>
+        <item>Saint-Saens，聖桑，http://4.bp.blogspot.com/-UhH8rSBcWJQ/VIoDvbhOipI/AAAAAAAAAMQ/XjIp9K54I64/s1600/220px-Saintsaens.jpg，PLOEZfHSao19U06t4GsxStFlMS0ji0tTKW</item>
+        <item>Scriabin，史克里亞賓，https://media1.britannica.com/eb-media/77/26377-004-F0D0F2C0.jpg，PLOEZfHSao19WBlsHKqF07drl5aZXyMHvl</item>
+        <item>Richard-Strauss，理查史特勞斯，https://www.8notes.com/wiki/images/Strauss_r.jpg，PLOEZfHSao19Wn9K4emk_fG1r6hm1FlYj3</item>
+        <item>Stravinsky，史特拉汶斯基，https://s-media-cache-ak0.pinimg.com/236x/c7/b0/b9/c7b0b9e0e0e640b7608b6da355b6f166--the-rite-of-spring-music-people.jpg，PLOEZfHSao19XADX4uvRs2NlUWXCqcnXdf</item>
+        <item>Shostakovich，蕭斯塔高維契，http://piano4life.com/homephotos/z41.JPG，PLOEZfHSao19WE_qov_O2EAiKn3KkctS_l</item>
+        <item>Sibelius，西貝流士，http://img0.liveinternet.ru/images/attach/c/6/90/449/90449566_3733824_64008.jpg，PLOEZfHSao19W1Udg3uqnnHNPtFApux2CT</item>
+        <item>Tchaikovsky，柴可夫斯基，http://cdn.kapistatic.net/historyhop/images/people/pyotr-ilyich-tchaikovsky.jpg，PLOEZfHSao19WrmkW0ZMVQdLSgcveN7wLM</item>
+
+        <item>Verdi，威爾第，https://www.8notes.com/images/artists/giuseppe_verdi.jpg，PLOEZfHSao19Vg2FwQVfgvYWQYRlXsMZoW</item>
+        <item>Villa-Lobos，魏拉羅伯士，http://i2.wp.com/www.sul21.com.br/jornal/wp-content/uploads/2013/11/20131116villa-jovem.jpg，PLOEZfHSao19WGzgYbIkvfdQFT0DRDrtJo</item>
+        <item>Vivaldi，韋瓦第，https://upload.wikimedia.org/wikipedia/commons/thumb/b/bd/Vivaldi.jpg/240px-Vivaldi.jpg，PLOEZfHSao19VpfxvwN4Y1EXt6tL9_89px</item>
+        <item>Weber，韋伯，http://www.geocities.ws/esplanade_spirit/weber_6.jpg，PLOEZfHSao19V1X9iBUuq5aCXEY0BQLZLq</item>
+    </array>
+
+    <string name="large_text">
+        "Material is the metaphor.\n\n"
+
+        "A material metaphor is the unifying theory of a rationalized space and a system of motion."
+        "The material is grounded in tactile reality, inspired by the study of paper and ink, yet "
+        "technologically advanced and open to imagination and magic.\n"
+        "Surfaces and edges of the material provide visual cues that are grounded in reality. The "
+        "use of familiar tactile attributes helps users quickly understand affordances. Yet the "
+        "flexibility of the material creates new affordances that supercede those in the physical "
+        "world, without breaking the rules of physics.\n"
+        "The fundamentals of light, surface, and movement are key to conveying how objects move, "
+        "interact, and exist in space and in relation to each other. Realistic lighting shows "
+        "seams, divides space, and indicates moving parts.\n\n"
+
+        "Bold, graphic, intentional.\n\n"
+
+        "The foundational elements of print based design typography, grids, space, scale, color, "
+        "and use of imagery guide visual treatments. These elements do far more than please the "
+        "eye. They create hierarchy, meaning, and focus. Deliberate color choices, edge to edge "
+        "imagery, large scale typography, and intentional white space create a bold and graphic "
+        "interface that immerse the user in the experience.\n"
+        "An emphasis on user actions makes core functionality immediately apparent and provides "
+        "waypoints for the user.\n\n"
+
+        "Motion provides meaning.\n\n"
+
+        "Motion respects and reinforces the user as the prime mover. Primary user actions are "
+        "inflection points that initiate motion, transforming the whole design.\n"
+        "All action takes place in a single environment. Objects are presented to the user without "
+        "breaking the continuity of experience even as they transform and reorganize.\n"
+        "Motion is meaningful and appropriate, serving to focus attention and maintain continuity. "
+        "Feedback is subtle yet clear. Transitions are efﬁcient yet coherent.\n\n"
+
+        "3D world.\n\n"
+
+        "The material environment is a 3D space, which means all objects have x, y, and z "
+        "dimensions. The z-axis is perpendicularly aligned to the plane of the display, with the "
+        "positive z-axis extending towards the viewer. Every sheet of material occupies a single "
+        "position along the z-axis and has a standard 1dp thickness.\n"
+        "On the web, the z-axis is used for layering and not for perspective. The 3D world is "
+        "emulated by manipulating the y-axis.\n\n"
+
+        "Light and shadow.\n\n"
+
+        "Within the material environment, virtual lights illuminate the scene. Key lights create "
+        "directional shadows, while ambient light creates soft shadows from all angles.\n"
+        "Shadows in the material environment are cast by these two light sources. In Android "
+        "development, shadows occur when light sources are blocked by sheets of material at "
+        "various positions along the z-axis. On the web, shadows are depicted by manipulating the "
+        "y-axis only. The following example shows the card with a height of 6dp.\n\n"
+
+        "Resting elevation.\n\n"
+
+        "All material objects, regardless of size, have a resting elevation, or default elevation "
+        "that does not change. If an object changes elevation, it should return to its resting "
+        "elevation as soon as possible.\n\n"
+
+        "Component elevations.\n\n"
+
+        "The resting elevation for a component type is consistent across apps (e.g., FAB elevation "
+        "does not vary from 6dp in one app to 16dp in another app).\n"
+        "Components may have different resting elevations across platforms, depending on the depth "
+        "of the environment (e.g., TV has a greater depth than mobile or desktop).\n\n"
+
+        "Responsive elevation and dynamic elevation offsets.\n\n"
+
+        "Some component types have responsive elevation, meaning they change elevation in response "
+        "to user input (e.g., normal, focused, and pressed) or system events. These elevation "
+        "changes are consistently implemented using dynamic elevation offsets.\n"
+        "Dynamic elevation offsets are the goal elevation that a component moves towards, relative "
+        "to the component’s resting state. They ensure that elevation changes are consistent "
+        "across actions and component types. For example, all components that lift on press have "
+        "the same elevation change relative to their resting elevation.\n"
+        "Once the input event is completed or cancelled, the component will return to its resting "
+        "elevation.\n\n"
+
+        "Avoiding elevation interference.\n\n"
+
+        "Components with responsive elevations may encounter other components as they move between "
+        "their resting elevations and dynamic elevation offsets. Because material cannot pass "
+        "through other material, components avoid interfering with one another any number of ways, "
+        "whether on a per component basis or using the entire app layout.\n"
+        "On a component level, components can move or be removed before they cause interference. "
+        "For example, a floating action button (FAB) can disappear or move off screen before a "
+        "user picks up a card, or it can move if a snackbar appears.\n"
+        "On the layout level, design your app layout to minimize opportunities for interference. "
+        "For example, position the FAB to one side of stream of a cards so the FAB won’t interfere "
+        "when a user tries to pick up one of cards."
+    </string>
+</resources>

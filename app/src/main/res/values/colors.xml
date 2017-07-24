@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="colorPrimaryDark">#FF880E4F</color>
+    <color name="colorPrimary">#FFAD1457</color>
+    <color name="colorAccent">#FFF8BBD0</color>
+
+    <color name="color_media_panel">#DF880E4F</color>
+
+    <color name="color_FFFFFFFF">#FFFFFFFF</color>
+    <color name="color_FF000000">#FF000000</color>
+
+    <color name="color_FF303030">#FF303030</color>
+    <color name="color_55303030">#88303030</color>
+
+    <color name="color_11000000">#11000000</color>
+
+</resources>

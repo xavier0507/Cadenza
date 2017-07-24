@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xy.hippocampus.cadenza.view.SquareCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/layout_mainlist_item_root"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:elevation="@dimen/common_dimen_15dp"
+    android:foreground="@drawable/ripple_effect_fff48fb1"
+    android:translationZ="@dimen/common_dimen_3dp">
+
+    <xy.hippocampus.cadenza.view.SquareImageView
+        android:id="@+id/rv_url"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/color_FF000000"
+        android:scaleType="centerCrop" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/rv_url"
+        android:layout_gravity="bottom"
+        android:background="@color/color_55303030"
+        android:padding="@dimen/common_dimen_1dp">
+
+        <TextView
+            android:id="@+id/text_title"
+            style="@style/TextFFFFFFFFSmall"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:gravity="center_horizontal"
+            android:maxLines="1"
+            tools:text="Mozart" />
+
+        <TextView
+            android:id="@+id/text_subtitle"
+            style="@style/TextFFFFFFFFSmall"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/text_title"
+            android:layout_marginTop="@dimen/common_dimen_2dp"
+            android:ellipsize="end"
+            android:gravity="center_horizontal"
+            android:maxLines="1"
+            tools:text="莫札特" />
+    </RelativeLayout>
+</xy.hippocampus.cadenza.view.SquareCardView>

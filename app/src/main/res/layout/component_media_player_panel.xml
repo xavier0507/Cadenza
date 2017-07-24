@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/player_view_parent"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="@dimen/common_dimen_5dp">
+
+    <include layout="@layout/component_media_player_panel_header" />
+
+    <FrameLayout
+        android:id="@+id/youtube_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/media_player_panel_header"
+        android:layout_centerHorizontal="true"
+        android:visibility="visible" />
+
+    <include layout="@layout/component_media_player_panel_controller" />
+</RelativeLayout>

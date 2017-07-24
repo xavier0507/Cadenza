@@ -1,0 +1,13 @@
+<resources>
+
+    <!-- Common -->
+    <string name="action_confirm">確定</string>
+    <string name="action_cancel">取消</string>
+
+    <string name="progress_dialog_default_message">Processing...</string>
+
+    <!-- Exit Dialog -->
+    <string name="exit_dialog_title">結束程式</string>
+    <string name="exit_dialog_message">確定離開Cadenza嗎？</string>
+
+</resources>

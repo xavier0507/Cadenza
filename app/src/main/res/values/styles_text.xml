@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="TextFF000000Small" parent="TextAppearance.AppCompat.Small">
+        <item name="android:textColor">@color/text_color_FF000000</item>
+    </style>
+
+    <style name="TextFF000000Medium" parent="TextAppearance.AppCompat.Medium">
+        <item name="android:textColor">@color/text_color_FF000000</item>
+    </style>
+
+    <style name="TextFF000000Large" parent="TextAppearance.AppCompat.Large">
+        <item name="android:textColor">@color/text_color_FF000000</item>
+    </style>
+
+    <style name="TextFFFFFFFFSmall" parent="TextAppearance.AppCompat.Small">
+        <item name="android:textColor">@color/text_color_FFFFFFFF</item>
+    </style>
+
+    <style name="TextFFFFFFFFMedium" parent="TextAppearance.AppCompat.Medium">
+        <item name="android:textColor">@color/text_color_FFFFFFFF</item>
+    </style>
+
+    <style name="TextFFFFFFFFLarge" parent="TextAppearance.AppCompat.Large">
+        <item name="android:textColor">@color/text_color_FFFFFFFF</item>
+    </style>
+
+</resources>

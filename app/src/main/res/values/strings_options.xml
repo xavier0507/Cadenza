@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- app_bar -->
+    <string name="app_bar_search_title">搜尋</string>
+    <string name="app_bar_search_hint">輸入關鍵字</string>
+    <string name="app_bar_account_title">登入帳號</string>
+
+    <!-- media_tab_layout -->
+    <string name="tab_layout_media_title_1">音樂家</string>
+    <string name="tab_layout_media_title_2">類型</string>
+    <string name="tab_layout_media_title_3">收藏</string>
+
+</resources>

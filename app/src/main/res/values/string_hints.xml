@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="hint_cannot_work_without_permissions">您沒有開啟聯絡人權限，Cadenza無法提供服務。</string>
+    <string name="hint_cannot_work_open_app_settings">Cadenza需要使用您的Google帳號來存取Youtube內容，請開啟聯絡人權限，才能正常使用。</string>
+    <string name="hint_request_permissions">Cadenza需要使用您的Google帳號來存取Youtube內容。</string>
+
+    <string name="hint_video_number" formatted="false">%3s. 曲目: %s</string>
+
+</resources>
