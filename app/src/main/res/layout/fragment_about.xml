@@ -1,0 +1,421 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/layout_about_root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimary"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical">
+
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/main.toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/colorPrimary"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+            app:title="">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:id="@+id/main.imageview.back"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:background="@drawable/ripple_effect_fff48fb1"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:src="@drawable/ic_arrow_back" />
+
+                <TextView
+                    android:id="@+id/main.textview.title"
+                    style="@style/TextFFFFFFFFLarge"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="@dimen/common_dimen_8dp"
+                    android:gravity="center_vertical"
+                    android:text="關於Cadenza"
+                    android:textColor="@android:color/white" />
+            </LinearLayout>
+        </android.support.v7.widget.Toolbar>
+    </android.support.design.widget.AppBarLayout>
+
+    <ScrollView
+        android:id="@+id/scroll_about"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <android.support.v7.widget.CardView
+                android:id="@+id/card_about_cadenza"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/common_dimen_10dp"
+                android:clickable="true"
+                android:foreground="@drawable/ripple_effect_fff48fb1"
+                app:cardCornerRadius="@dimen/common_dimen_1dp"
+                app:cardElevation="@dimen/common_dimen_5dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/color_FF303030"
+                    android:orientation="vertical">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <ImageView
+                            android:id="@+id/img_about_cadenza_header"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/common_dimen_150dp"
+                            android:scaleType="centerCrop"
+                            android:layout_alignParentTop="true"
+                            android:layout_alignParentStart="true" />
+
+                        <ImageView
+                            android:id="@+id/img_about_cadenza_photo"
+                            android:layout_width="@dimen/common_dimen_90dp"
+                            android:layout_height="@dimen/common_dimen_90dp"
+                            android:layout_marginLeft="@dimen/common_dimen_20dp"
+                            android:layout_marginRight="@dimen/common_dimen_20dp"
+                            android:layout_marginTop="@dimen/common_dimen_105dp"
+                            android:background="@drawable/border_ff000000_accent_background" />
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/common_dimen_158dp"
+                            android:layout_toRightOf="@id/img_about_cadenza_photo"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/text_about_cadenza_name"
+                                style="@style/TextFFFFFFFFLarge"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/app_name"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:id="@+id/text_about_cadenza_role"
+                                style="@style/TextFFFFFFFFSmall"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/app_role" />
+                        </LinearLayout>
+                    </RelativeLayout>
+
+                    <TextView
+                        android:id="@+id/text_about_cadenza_description"
+                        style="@style/TextFFFFFFFFMedium"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/common_dimen_20dp"
+                        android:layout_marginRight="@dimen/common_dimen_20dp"
+                        android:layout_gravity=""
+                        android:layout_marginTop="@dimen/common_dimen_20dp"
+                        android:text="@string/app_description" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:padding="@dimen/common_dimen_10dp">
+
+                        <TextView
+                            android:id="@+id/text_about_cadenza_version"
+                            style="@style/TextFFFFFFFFMedium"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/ripple_effect_fff48fb1"
+                            android:clickable="true"
+                            android:padding="@dimen/common_dimen_10dp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+                </LinearLayout>
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView
+                android:id="@+id/card_about_xavier"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/common_dimen_10dp"
+                android:clickable="true"
+                android:foreground="@drawable/ripple_effect_fff48fb1"
+                app:cardCornerRadius="@dimen/common_dimen_1dp"
+                app:cardElevation="@dimen/common_dimen_5dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/color_FF303030"
+                    android:orientation="vertical">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <ImageView
+                            android:id="@+id/img_about_xavier_header"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/common_dimen_150dp"
+                            android:scaleType="centerCrop" />
+
+                        <de.hdodenhof.circleimageview.CircleImageView
+                            android:id="@+id/img_about_xavier_photo"
+                            android:layout_width="@dimen/common_dimen_90dp"
+                            android:layout_height="@dimen/common_dimen_90dp"
+                            android:layout_marginLeft="@dimen/common_dimen_20dp"
+                            android:layout_marginRight="@dimen/common_dimen_20dp"
+                            android:layout_marginTop="@dimen/common_dimen_105dp"
+                            app:civ_border_width="@dimen/common_dimen_1dp" />
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/common_dimen_158dp"
+                            android:layout_toRightOf="@id/img_about_xavier_photo"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/text_about_xavier_name"
+                                style="@style/TextFFFFFFFFMedium"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Xavier Yin"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:id="@+id/text_about_xavier_role"
+                                style="@style/TextFFFFFFFFSmall"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Software Engineer" />
+                        </LinearLayout>
+                    </RelativeLayout>
+
+                    <TextView
+                        android:id="@+id/text_about_xavier_description"
+                        style="@style/TextFFFFFFFFSmall"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/common_dimen_20dp"
+                        android:layout_marginRight="@dimen/common_dimen_20dp"
+                        android:layout_marginTop="@dimen/common_dimen_20dp"
+                        android:text="@string/app_about_xavier" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:padding="@dimen/common_dimen_10dp">
+
+                        <TextView
+                            android:id="@+id/text_about_xavier_email"
+                            style="@style/TextFFFFFFFFMedium"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/ripple_effect_fff48fb1"
+                            android:clickable="true"
+                            android:padding="@dimen/common_dimen_10dp"
+                            android:text="@string/app_action_contacts"
+                            android:textStyle="bold" />
+
+                        <!--<TextView-->
+                        <!--android:id="@+id/text_about_xavier_google"-->
+                        <!--style="@style/TextFFFFFFFFSmall"-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:background="@drawable/ripple_effect_fff48fb1"-->
+                        <!--android:clickable="true"-->
+                        <!--android:padding="@dimen/common_dimen_10dp"-->
+                        <!--android:text="GOOGLE +" />-->
+
+                        <!--<TextView-->
+                        <!--android:id="@+id/text_about_xavier_git"-->
+                        <!--style="@style/TextFFFFFFFFSmall"-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:background="@drawable/ripple_effect_fff48fb1"-->
+                        <!--android:clickable="true"-->
+                        <!--android:padding="@dimen/common_dimen_10dp"-->
+                        <!--android:text="GITHUB" />-->
+                    </LinearLayout>
+                </LinearLayout>
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView
+                android:id="@+id/card_about_jim"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/common_dimen_10dp"
+                android:clickable="true"
+                android:foreground="@drawable/ripple_effect_fff48fb1"
+                app:cardCornerRadius="@dimen/common_dimen_1dp"
+                app:cardElevation="@dimen/common_dimen_5dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/color_FF303030"
+                    android:orientation="vertical">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <ImageView
+                            android:id="@+id/img_about_jim_header"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/common_dimen_150dp"
+                            android:scaleType="centerCrop" />
+
+                        <de.hdodenhof.circleimageview.CircleImageView
+                            android:id="@+id/img_about_jim_photo"
+                            android:layout_width="@dimen/common_dimen_90dp"
+                            android:layout_height="@dimen/common_dimen_90dp"
+                            android:layout_marginLeft="@dimen/common_dimen_20dp"
+                            android:layout_marginRight="@dimen/common_dimen_20dp"
+                            android:layout_marginTop="@dimen/common_dimen_105dp"
+                            app:civ_border_width="@dimen/common_dimen_1dp" />
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/common_dimen_158dp"
+                            android:layout_toRightOf="@id/img_about_jim_photo"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/text_about_jim_name"
+                                style="@style/TextFFFFFFFFMedium"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Jim Hsieh"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:id="@+id/text_about_jim_role"
+                                style="@style/TextFFFFFFFFSmall"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Product Manager" />
+                        </LinearLayout>
+                    </RelativeLayout>
+
+                    <TextView
+                        android:id="@+id/text_about_jim_description"
+                        style="@style/TextFFFFFFFFSmall"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/common_dimen_20dp"
+                        android:layout_marginLeft="@dimen/common_dimen_20dp"
+                        android:layout_marginRight="@dimen/common_dimen_20dp"
+                        android:layout_marginTop="@dimen/common_dimen_20dp"
+                        android:text="@string/app_about_jim" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:padding="@dimen/common_dimen_10dp">
+
+                        <TextView
+                            android:id="@+id/text_about_jim_email"
+                            style="@style/TextFFFFFFFFMedium"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/ripple_effect_fff48fb1"
+                            android:clickable="true"
+                            android:padding="@dimen/common_dimen_10dp"
+                            android:text="@string/app_action_contacts"
+                            android:textStyle="bold" />
+
+                        <!--<TextView-->
+                        <!--android:id="@+id/text_about_xavier_google"-->
+                        <!--style="@style/TextFFFFFFFFSmall"-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:background="@drawable/ripple_effect_fff48fb1"-->
+                        <!--android:clickable="true"-->
+                        <!--android:padding="@dimen/common_dimen_10dp"-->
+                        <!--android:text="GOOGLE +" />-->
+
+                        <!--<TextView-->
+                        <!--android:id="@+id/text_about_xavier_git"-->
+                        <!--style="@style/TextFFFFFFFFSmall"-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:background="@drawable/ripple_effect_fff48fb1"-->
+                        <!--android:clickable="true"-->
+                        <!--android:padding="@dimen/common_dimen_10dp"-->
+                        <!--android:text="GITHUB" />-->
+                    </LinearLayout>
+                </LinearLayout>
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/common_dimen_10dp"
+                android:clickable="true"
+                android:foreground="@drawable/ripple_effect_fff48fb1"
+                app:cardCornerRadius="@dimen/common_dimen_1dp"
+                app:cardElevation="@dimen/common_dimen_5dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/color_55303030"
+                    android:orientation="vertical">
+
+                    <TextView
+                        style="@style/TextFFFFFFFFMedium"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="@dimen/common_dimen_16dp"
+                        android:paddingTop="@dimen/common_dimen_16dp"
+                        android:text="@string/app_about_thanks_title"
+                        android:textStyle="bold" />
+
+                    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:paddingBottom="@dimen/common_dimen_10dp"
+                        android:paddingEnd="@dimen/common_dimen_20dp"
+                        android:paddingStart="@dimen/common_dimen_20dp">
+
+                        <TextView
+                            style="@style/TextFFFFFFFFSmall"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/common_dimen_8dp"
+                            android:text="@string/app_about_thanks_iron" />
+
+                        <TextView
+                            style="@style/TextFFFFFFFFSmall"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/common_dimen_8dp"
+                            android:text="@string/app_about_thanks_users" />
+                    </LinearLayout>
+                </LinearLayout>
+            </android.support.v7.widget.CardView>
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

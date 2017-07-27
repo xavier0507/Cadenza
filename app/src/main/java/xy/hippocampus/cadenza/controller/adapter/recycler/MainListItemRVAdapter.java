@@ -96,7 +96,7 @@ public class MainListItemRVAdapter extends BaseRVAdapter<MainListItemInfo> {
 
                 startAnimation(false, itemComposerVH.itemView, position);
                 ViewCompat.setTransitionName(itemComposerVH.urlRIV, String.valueOf(position) + "_photo");
-                itemComposerVH.rootViewGroup.setOnClickListener(new View.OnClickListener() {
+                itemComposerVH.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         onClickedListener.onAdapterClicked(itemComposerVH, mainListItemInfo, position);

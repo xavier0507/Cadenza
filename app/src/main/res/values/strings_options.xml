@@ -6,6 +6,10 @@
     <string name="app_bar_search_hint">輸入關鍵字</string>
     <string name="app_bar_account_title">登入帳號</string>
 
+    <!-- menu -->
+    <string name="menu_option_about">關於</string>
+    <string name="menu_option_settings">設定</string>
+
     <!-- media_tab_layout -->
     <string name="tab_layout_media_title_1">音樂家</string>
     <string name="tab_layout_media_title_2">類型</string>

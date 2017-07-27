@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import xy.hippocampus.cadenza.BuildConfig;
 import xy.hippocampus.cadenza.controller.fragment.MainListFragment;
 import xy.hippocampus.cadenza.util.LogUtil;
 
@@ -75,6 +76,22 @@ public abstract class BaseFragment extends Fragment {
 
     public INotifyProgress getProgressCallback() {
         return NOTIFY_PROGRESS_CALLBACK;
+    }
+
+    public boolean isDebugVersion() {
+        return BuildConfig.DEBUG;
+    }
+
+    public String getCurrentFlavor() {
+        return BuildConfig.FLAVOR;
+    }
+
+    public String getCurrentBuildType() {
+        return BuildConfig.BUILD_TYPE;
+    }
+
+    public String getCurrentVersion() {
+        return BuildConfig.VERSION_NAME;
     }
 
     public static void setINotifyProgress(INotifyProgress notifyProgress) {
