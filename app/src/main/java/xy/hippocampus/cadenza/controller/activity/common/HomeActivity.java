@@ -7,6 +7,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
+import android.view.MenuItem;
+import android.widget.Toast;
 
 import xy.hippocampus.cadenza.R;
 import xy.hippocampus.cadenza.controller.activity.common.base.BaseEPMIActivity;
@@ -123,15 +125,19 @@ public class HomeActivity extends BaseEPMIActivity implements INotifyProgress {
 
         if (this.stackManager.getSize() > 1) {
             for (Fragment fragment : this.stackManager.getValues()) {
-                if (!fragment.getTag().equals(FRAG_MAIN_LIST_TAG) &&
-                        !fragment.getTag().equals(FRAG_MEDIA_PLAYER_PANEL_TAG) &&
-                        fragment.isVisible()) {
-                    this.getSupportFragmentManager().beginTransaction().remove(fragment).commit();
-                    this.stackManager.popFragment(fragment.getTag());
+                this.logUtil.i("current fragment: " + fragment.getTag());
 
-                    this.logUtil.i("fragment order: " + fragment.getTag());
-                    this.logUtil.i("fragment isVisible: " + fragment.isVisible());
-                    break;
+                if (fragment != null) {
+                    if (!fragment.getTag().equals(FRAG_MAIN_LIST_TAG) &&
+                            !fragment.getTag().equals(FRAG_MEDIA_PLAYER_PANEL_TAG) &&
+                            fragment.isVisible()) {
+                        this.getSupportFragmentManager().beginTransaction().remove(fragment).commit();
+                        this.stackManager.popFragment(fragment.getTag());
+
+                        this.logUtil.i("fragment order: " + fragment.getTag());
+                        this.logUtil.i("fragment isVisible: " + fragment.isVisible());
+                        break;
+                    }
                 }
             }
         }

@@ -10,7 +10,11 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.transition.Fade;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import java.util.List;
 
@@ -28,8 +32,10 @@ import xy.hippocampus.cadenza.model.database.base.IDataSourceStrategy;
 import xy.hippocampus.cadenza.model.database.mainlist.DataSourceHelper;
 import xy.hippocampus.cadenza.model.database.mainlist.FirebaseDataSourceImp;
 import xy.hippocampus.cadenza.model.database.mainlist.LocalDataSourceImp;
+import xy.hippocampus.cadenza.util.FragmentUtil;
 import xy.hippocampus.cadenza.view.ImageViewTransition;
 
+import static xy.hippocampus.cadenza.model.constant.Constants.FRAG_ABOUT_TAG;
 import static xy.hippocampus.cadenza.model.constant.Constants.FRAG_MAIN_LIST_TAG;
 import static xy.hippocampus.cadenza.model.constant.Constants.FRAG_PLAYLIST_TAG;
 import static xy.hippocampus.cadenza.model.constant.IntentExtra.INTENT_EXTRA_COMPOSER_INFO;
@@ -47,8 +53,42 @@ public class MainListFragment extends BaseFragment implements IOnClickedListener
     private IDataSourceStrategy dataSourceStrategy;
 
     @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        this.getActivity().getMenuInflater().inflate(R.menu.menu_app_bar, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_about:
+                FragmentUtil.addFragment(
+                        (AppCompatActivity) this.getActivity(),
+                        AboutFragment.newInstance(),
+                        R.id.frag_home,
+                        FRAG_ABOUT_TAG);
+                break;
+
+//            case R.id.action_settings:
+//                Toast.makeText(this.getActivity(), "Settings", Toast.LENGTH_SHORT).show();
+//                return true;
+
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+
+        return true;
+    }
+
+    @Override
     protected int layoutResourceId() {
         return R.layout.fragment_main_list;
+    }
+
+    @Override
+    protected void preProcess(View root) {
+        super.preProcess(root);
+        this.setHasOptionsMenu(true);
     }
 
     @Override
@@ -88,25 +128,14 @@ public class MainListFragment extends BaseFragment implements IOnClickedListener
         Intent intent = new Intent();
         intent.putExtra(INTENT_EXTRA_COMPOSER_INFO, param);
 
-        FragmentManager fragmentManager = this.getActivity().getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-
         Fragment fragment = PlayListFragment.newInstance();
-        FragmentStackManager.getInstance().pushFragment(FRAG_PLAYLIST_TAG, fragment);
         fragment.setArguments(intent.getExtras());
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            fragment.setSharedElementEnterTransition(new ImageViewTransition());
-            fragment.setEnterTransition(new Fade());
-            fragment.setExitTransition(new Fade());
-            fragment.setSharedElementReturnTransition(new ImageViewTransition());
-        } else {
-            fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
-        }
-
-        fragmentTransaction
-                .add(R.id.frag_home, fragment, FRAG_PLAYLIST_TAG)
-                .commit();
+        FragmentUtil.addFragment(
+                (AppCompatActivity) this.getActivity(),
+                fragment,
+                R.id.frag_home,
+                FRAG_PLAYLIST_TAG);
     }
 
     @Override

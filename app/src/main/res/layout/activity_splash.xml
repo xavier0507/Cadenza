@@ -29,17 +29,17 @@
                     android:scaleType="centerCrop"
                     android:src="@drawable/bg_splash_01" />
 
-                <View
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1" />
-
                 <ImageView
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:scaleType="centerCrop"
                     android:src="@drawable/bg_splash_02" />
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
             </TableRow>
         </TableLayout>
 
@@ -50,6 +50,13 @@
             android:orientation="horizontal">
 
             <TableRow>
+
+                <ImageView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/bg_splash_07" />
 
                 <View
                     android:layout_width="0dp"
@@ -62,11 +69,6 @@
                     android:layout_weight="1"
                     android:scaleType="centerCrop"
                     android:src="@drawable/bg_splash_03" />
-
-                <View
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1" />
             </TableRow>
         </TableLayout>
     </LinearLayout>
@@ -113,8 +115,8 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/layout_clef"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="@dimen/common_dimen_5dp"
-                android:text="Cadenza" />
+                android:text="Cadenza"
+                android:textStyle="bold" />
         </RelativeLayout>
     </RelativeLayout>
 
@@ -134,11 +136,6 @@
 
             <TableRow>
 
-                <View
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1" />
-
                 <ImageView
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
@@ -150,6 +147,13 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1" />
+
+                <ImageView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/bg_splash_08" />
             </TableRow>
         </TableLayout>
 
@@ -161,17 +165,17 @@
 
             <TableRow>
 
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
+
                 <ImageView
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:scaleType="centerCrop"
                     android:src="@drawable/bg_splash_05" />
-
-                <View
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1" />
 
                 <ImageView
                     android:layout_width="0dp"

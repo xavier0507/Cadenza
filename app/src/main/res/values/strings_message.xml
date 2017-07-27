@@ -16,6 +16,8 @@
     <string name="exception_list_null_size">List不能為空物件!</string>
     <string name="exception_adapter_null">RecyclerView不能為空物件!</string>
 
+    <string name="exception_email_fail">無可用的郵件應用程式</string>
+
     <!-- Toast Message -->
     <string name="toast_check_account_is_device_online">請確認是否連接網路。</string>
     <string name="toast_check_account_login_success">登入Google帳號成功。</string>
