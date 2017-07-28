@@ -5,4 +5,6 @@
 
     <item name="youtube_player_view" type="id" />
 
+    <item name="progress_bar_id" type="id" />
+
 </resources>

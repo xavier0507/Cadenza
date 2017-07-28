@@ -84,6 +84,7 @@
             <android.support.v4.widget.NestedScrollView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:overScrollMode="never"
                 android:scrollbars="none"
                 app:behavior_overlapTop="@dimen/common_dimen_13dp"
                 app:layout_behavior="@string/appbar_scrolling_view_behavior">

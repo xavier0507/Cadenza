@@ -5,6 +5,7 @@ import android.animation.AnimatorListenerAdapter;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.os.Build;
@@ -18,6 +19,8 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 import xy.hippocampus.cadenza.R;
+import xy.hippocampus.cadenza.controller.manager.PrefsManager;
+import xy.hippocampus.cadenza.util.ColorPalette;
 import xy.hippocampus.cadenza.util.LogUtil;
 
 import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
@@ -60,6 +63,9 @@ public class MediaPlayerPanel extends LinearLayout {
 
     private PlayerTouchHelper playerTouchHelper;
 
+    private PrefsManager prefsManager;
+    private int primaryAlphaColor;
+
     public MediaPlayerPanel(Context context) {
         this(context, null);
     }
@@ -71,6 +77,7 @@ public class MediaPlayerPanel extends LinearLayout {
     public MediaPlayerPanel(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         this.context = context;
+        this.prefsManager = PrefsManager.getInstance((Activity) this.context);
     }
 
     @Override
@@ -90,6 +97,7 @@ public class MediaPlayerPanel extends LinearLayout {
         this.mediaPlayerPanelController = this.findViewById(R.id.media_player_panel_controller);
         this.contentView = this.getChildAt(1);
 
+        this.updateColor();
         this.init();
     }
 
@@ -126,6 +134,8 @@ public class MediaPlayerPanel extends LinearLayout {
     }
 
     public void enlargePlayerView() {
+        this.updateColor();
+
         this.mediaPlayerPanelHeader.setVisibility(View.VISIBLE);
         this.mediaPlayerPanelController.setVisibility(View.VISIBLE);
 
@@ -163,11 +173,18 @@ public class MediaPlayerPanel extends LinearLayout {
     }
 
     public void narrowPlayerView() {
+        this.updateColor();
         this.startNarrowAnimator(200);
     }
 
     public boolean isCanHide() {
         return this.canHide;
+    }
+
+    public void updateColor() {
+        this.primaryAlphaColor = ColorPalette.getColorSuite(this.context, this.prefsManager.acquirePrimaryColor())[1];
+        this.mediaPlayerPanelHeader.setBackgroundColor(this.primaryAlphaColor);
+        this.mediaPlayerPanelController.setBackgroundColor(this.primaryAlphaColor);
     }
 
     private void init() {
@@ -473,7 +490,7 @@ public class MediaPlayerPanel extends LinearLayout {
 
     /**
      * Inner Classes
-     * */
+     */
     private OnTouchListener onTouchListenerForBlockingEventThroughtout = new OnTouchListener() {
         @Override
         public boolean onTouch(View v, MotionEvent event) {

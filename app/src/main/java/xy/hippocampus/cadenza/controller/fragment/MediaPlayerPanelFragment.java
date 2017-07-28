@@ -156,6 +156,8 @@ public class MediaPlayerPanelFragment extends BaseFragment implements MediaPlaye
                     this.mediaPlayerPanel.enlargePlayerView();
                 }
             }
+
+            this.mediaPlayerPanel.updateColor();
         } catch (Exception e) {
             this.youTubePlayerFragment.initialize(API_KEY, this);
         }

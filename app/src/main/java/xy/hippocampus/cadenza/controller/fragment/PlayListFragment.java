@@ -1,6 +1,7 @@
 package xy.hippocampus.cadenza.controller.fragment;
 
 import android.app.ProgressDialog;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.v4.app.Fragment;
@@ -13,6 +14,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AlphaAnimation;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -67,6 +69,7 @@ public class PlayListFragment extends BaseFragment implements
 
     private AppBarLayout appBarLayout;
     private SwipeRefreshLayout swipeRefreshLayout;
+    private FrameLayout titleFrameLayout;
     private LinearLayout titleContainerLayout;
 
     private ImageView backImageView;
@@ -120,6 +123,7 @@ public class PlayListFragment extends BaseFragment implements
         this.swipeRefreshLayout = (SwipeRefreshLayout) root.findViewById(R.id.swipe_refresh);
         this.toolbar = (Toolbar) root.findViewById(R.id.main_toolbar);
         this.appBarLayout = (AppBarLayout) root.findViewById(R.id.main_appbar);
+        this.titleFrameLayout = (FrameLayout) root.findViewById(R.id.main_framelayout_title);
         this.titleContainerLayout = (LinearLayout) root.findViewById(R.id.main_linearlayout_title);
         this.backImageView = (ImageView) root.findViewById(R.id.main_imageview_back);
         this.titleText = (TextView) root.findViewById(R.id.main_textview_title);
@@ -144,8 +148,12 @@ public class PlayListFragment extends BaseFragment implements
         this.translationName.setText(this.mainListItemInfo.getSubTitle());
         this.progressDialog.setMessage(this.getString(R.string.progress_dialog_default_message));
 
-        this.swipeRefreshLayout.setColorSchemeResources(R.color.colorAccent);
-        this.swipeRefreshLayout.setProgressBackgroundColorSchemeResource(R.color.colorPrimaryDark);
+        this.toolbar.setBackgroundColor(this.primaryColor);
+        this.titleFrameLayout.setBackgroundColor(this.primaryColor);
+        this.composerPhotoBackgroundRIV.setBackgroundColor(this.primaryColor);
+
+        this.swipeRefreshLayout.setColorSchemeColors(Color.parseColor("#" + Integer.toHexString(this.accentColor)));
+        this.swipeRefreshLayout.setProgressBackgroundColorSchemeColor(Color.parseColor("#" + Integer.toHexString(this.primaryColor)));
 
         Picasso.with(this.getActivity())
                 .load(this.mainListItemInfo.getUrl())

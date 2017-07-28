@@ -1,8 +1,11 @@
 package xy.hippocampus.cadenza.controller.fragment;
 
 import android.content.Intent;
+import android.graphics.drawable.GradientDrawable;
 import android.net.Uri;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -22,6 +25,8 @@ import static xy.hippocampus.cadenza.model.constant.Constants.FRAG_ABOUT_TAG;
  */
 
 public class AboutFragment extends BaseFragment implements View.OnClickListener {
+    private ViewGroup aboutRootLayout;
+    private Toolbar toolbar;
     private ImageView backImageView;
 
     private ImageView cadenzaHeaderImage;
@@ -45,6 +50,8 @@ public class AboutFragment extends BaseFragment implements View.OnClickListener 
     protected void findView(View root) {
         super.findView(root);
 
+        this.aboutRootLayout = (ViewGroup) root.findViewById(R.id.layout_about_root);
+        this.toolbar = (Toolbar) root.findViewById(R.id.main_toolbar);
         this.backImageView = (ImageView) root.findViewById(R.id.main_imageview_back);
 
         this.cadenzaHeaderImage = (ImageView) root.findViewById(R.id.img_about_cadenza_header);
@@ -64,6 +71,7 @@ public class AboutFragment extends BaseFragment implements View.OnClickListener 
     protected void assignViewSettings(View root) {
         super.assignViewSettings(root);
 
+        this.updateColor();
         this.loadInfo();
         this.loadImage();
     }
@@ -130,6 +138,14 @@ public class AboutFragment extends BaseFragment implements View.OnClickListener 
                 .priority(Priority.HIGH)
                 .animate(android.R.anim.fade_in)
                 .into(this.jimPhotoCircleImage);
+    }
+
+    private void updateColor() {
+        this.aboutRootLayout.setBackgroundColor(this.primaryColor);
+        this.toolbar.setBackgroundColor(this.primaryColor);
+
+        GradientDrawable bgDrawable = (GradientDrawable) this.cadenzaPhotoCircleImage.getBackground();
+        bgDrawable.setColor(this.primaryColor);
     }
 
     private void loadInfo() {

@@ -2,19 +2,27 @@ package xy.hippocampus.cadenza.controller.activity.common.base;
 
 import android.Manifest;
 import android.accounts.AccountManager;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AlertDialog;
 import android.widget.Toast;
 
 import java.util.List;
 
 import pub.devrel.easypermissions.AppSettingsDialog;
 import pub.devrel.easypermissions.EasyPermissions;
+import xy.hippocampus.cadenza.BuildConfig;
 import xy.hippocampus.cadenza.R;
+import xy.hippocampus.cadenza.controller.activity.app.CadenzaApplication;
+import xy.hippocampus.cadenza.controller.activity.common.SplashActivity;
 import xy.hippocampus.cadenza.controller.manager.GoogleAccountManager;
 import xy.hippocampus.cadenza.controller.manager.PrefsManager;
+import xy.hippocampus.cadenza.util.AppInfoUtil;
+import xy.hippocampus.cadenza.util.ColorPalette;
 
 import static xy.hippocampus.cadenza.controller.manager.GoogleAccountManager.REQUEST_ACCOUNT_PICKER;
 import static xy.hippocampus.cadenza.controller.manager.GoogleAccountManager.REQUEST_AUTHORIZATION;
@@ -30,6 +38,10 @@ public abstract class BaseEPMIActivity extends BaseActivity implements EasyPermi
     protected PrefsManager prefsManager;
 
     protected boolean isCheckingAccountStatus;
+
+    protected int primaryDarkColor;
+    protected int primaryColor;
+    protected int accentColor;
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -60,6 +72,9 @@ public abstract class BaseEPMIActivity extends BaseActivity implements EasyPermi
         super.preProcess();
         this.googleAccountManager = GoogleAccountManager.getInstance(this);
         this.prefsManager = PrefsManager.getInstance(this);
+        this.primaryColor = this.prefsManager.acquirePrimaryColor();
+        this.primaryDarkColor = ColorPalette.getColorSuite(this, this.primaryColor)[0];
+        this.accentColor = ColorPalette.getColorSuite(this, this.primaryColor)[2];
     }
 
     @Override
@@ -112,8 +127,7 @@ public abstract class BaseEPMIActivity extends BaseActivity implements EasyPermi
                 this.prefsManager.putLoginPopupMessageStatus();
             }
 
-            this.onSuccess();
-            this.isCheckingAccountStatus = false;
+            this.update();
         }
     }
 
@@ -179,5 +193,45 @@ public abstract class BaseEPMIActivity extends BaseActivity implements EasyPermi
 
     protected void onFinish() {
         // Do nothing for overriding
+    }
+
+    protected void update() {
+        boolean isForceUpdate = CadenzaApplication.isForceUpdate();
+
+        if (isForceUpdate) {
+            this.checkoutVersion();
+        } else {
+            this.onSuccess();
+            this.isCheckingAccountStatus = false;
+        }
+    }
+
+    protected void checkoutVersion() {
+        String remoteVersion = CadenzaApplication.getAppVersion();
+        String localVersion = BuildConfig.VERSION_NAME;
+
+        logUtil.i("remoteVersion: " + remoteVersion);
+        logUtil.i("localVersion: " + localVersion);
+
+        if (!AppInfoUtil.isLastVersionOnLocalSide(localVersion, remoteVersion)) {
+            this.showUpdateDialog();
+        }
+    }
+
+    protected void showUpdateDialog() {
+        final AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(this.getString(R.string.update_dialog_title))
+                .setMessage(R.string.update_dialog_message)
+                .setCancelable(false)
+                .setPositiveButton(R.string.action_confirm, new DialogInterface.OnClickListener() {
+
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(CadenzaApplication.getUpdateUrl()));
+                        startActivity(intent);
+                        BaseEPMIActivity.this.finish();
+                    }
+                })
+                .show();
     }
 }

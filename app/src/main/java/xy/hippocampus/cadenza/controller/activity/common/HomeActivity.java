@@ -7,8 +7,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
-import android.view.MenuItem;
-import android.widget.Toast;
 
 import xy.hippocampus.cadenza.R;
 import xy.hippocampus.cadenza.controller.activity.common.base.BaseEPMIActivity;
@@ -94,6 +92,7 @@ public class HomeActivity extends BaseEPMIActivity implements INotifyProgress {
     @Override
     public void notifyProgressAppear(boolean isBlocked) {
         this.progressHelper.changeBlockStatus(isBlocked);
+        this.progressHelper.updateProgressCircleColor();
         this.progressHelper.showProgressBar();
     }
 
@@ -146,17 +145,19 @@ public class HomeActivity extends BaseEPMIActivity implements INotifyProgress {
     }
 
     private void confirmBack() {
-        new AlertDialog.Builder(this)
-                .setTitle(this.getString(R.string.exit_dialog_title))
+        final AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(this.getString(R.string.exit_dialog_title))
                 .setMessage(R.string.exit_dialog_message)
                 .setCancelable(false)
                 .setPositiveButton(R.string.action_confirm, new DialogInterface.OnClickListener() {
+
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         finish();
                     }
                 })
                 .setNegativeButton(R.string.action_cancel, new DialogInterface.OnClickListener() {
+
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.cancel();
