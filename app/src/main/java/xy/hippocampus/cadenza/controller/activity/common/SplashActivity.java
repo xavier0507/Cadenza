@@ -4,21 +4,33 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Handler;
+import android.support.v7.app.AlertDialog;
+import android.view.ViewGroup;
 import android.view.animation.DecelerateInterpolator;
 import android.view.animation.OvershootInterpolator;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import xy.hippocampus.cadenza.BuildConfig;
 import xy.hippocampus.cadenza.R;
+import xy.hippocampus.cadenza.controller.activity.app.CadenzaApplication;
 import xy.hippocampus.cadenza.controller.activity.common.base.BaseEPMIActivity;
+import xy.hippocampus.cadenza.util.AppInfoUtil;
 
 /**
  * Created by Xavier Yin on 2017/7/10.
  */
 
 public class SplashActivity extends BaseEPMIActivity {
+    private ViewGroup splashRootLayout;
+    private ViewGroup splashTopContainerLayout;
+    private ViewGroup splashMediumContainerLayout;
+    private ViewGroup splashBottomContainerLayout;
+
     private ImageView clef01ImageView;
     private ImageView clef02ImageView;
     private TextView appNameText;
@@ -32,9 +44,24 @@ public class SplashActivity extends BaseEPMIActivity {
     protected void findView() {
         super.findView();
 
+        this.splashRootLayout = (ViewGroup) this.findViewById(R.id.layout_splash_root);
+        this.splashTopContainerLayout = (ViewGroup) this.findViewById(R.id.layout_top_container_root);
+        this.splashMediumContainerLayout = (ViewGroup) this.findViewById(R.id.layout_medium_container_root);
+        this.splashBottomContainerLayout = (ViewGroup) this.findViewById(R.id.layout_bottom_container_root);
+
         this.clef01ImageView = (ImageView) this.findViewById(R.id.img_clef01);
         this.clef02ImageView = (ImageView) this.findViewById(R.id.img_clef02);
         this.appNameText = (TextView) this.findViewById(R.id.text_app_name);
+    }
+
+    @Override
+    protected void assignViewSettings() {
+        super.assignViewSettings();
+
+        this.splashRootLayout.setBackgroundColor(this.primaryColor);
+        this.splashTopContainerLayout.setBackgroundColor(this.primaryColor);
+        this.splashMediumContainerLayout.setBackgroundColor(this.accentColor);
+        this.splashBottomContainerLayout.setBackgroundColor(this.primaryColor);
     }
 
     @Override
@@ -58,7 +85,7 @@ public class SplashActivity extends BaseEPMIActivity {
         objectAnimator03.setInterpolator(new DecelerateInterpolator(10));
         objectAnimator03.setStartDelay(1400);
 
-        ObjectAnimator objectAnimator04 = ObjectAnimator.ofFloat(this.clef01ImageView, "rotation", 0, 7);
+        ObjectAnimator objectAnimator04 = ObjectAnimator.ofFloat(this.clef01ImageView, "rotation", 0, 10);
         objectAnimator04.setInterpolator(new DecelerateInterpolator(10));
         objectAnimator04.setStartDelay(1600);
 

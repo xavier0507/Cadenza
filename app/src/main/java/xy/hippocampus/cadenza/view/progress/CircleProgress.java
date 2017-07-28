@@ -1,12 +1,16 @@
 package xy.hippocampus.cadenza.view.progress;
 
 import android.animation.ValueAnimator;
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.PointF;
 import android.util.AttributeSet;
 import android.view.View;
+
+import xy.hippocampus.cadenza.controller.manager.PrefsManager;
+import xy.hippocampus.cadenza.util.ColorPalette;
 
 /**
  * Created by Xavier Yin on 5/2/17.
@@ -43,7 +47,7 @@ public class CircleProgress extends View {
         this.context = context;
         this.viewWidth = 150;
         this.viewHeight = 150;
-        this.color = Color.parseColor("#FFF8BBD0");
+        this.color = Color.parseColor("#" + Integer.toHexString(ColorPalette.getColorSuite(this.context, PrefsManager.getInstance(((Activity) this.context)).acquirePrimaryColor())[2]));
         this.numberOfCircle = 6;
         this.rotates = new float[this.numberOfCircle];
     }
@@ -120,5 +124,13 @@ public class CircleProgress extends View {
 
     private void reDraw() {
         this.invalidate();
+    }
+
+    public void updateCircle() {
+        this.color = Color.parseColor("#" + Integer.toHexString(ColorPalette.getColorSuite(this.context, PrefsManager.getInstance(((Activity) this.context)).acquirePrimaryColor())[2]));
+
+        for (int i = 0; i < this.numberOfCircle; i++) {
+            this.circles[i].setColor(this.color);
+        }
     }
 }

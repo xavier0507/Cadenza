@@ -57,6 +57,7 @@ public class ProgressHelper implements View.OnTouchListener {
         if (this.topView == null) {
             this.topView = new FrameLayout(this.appCompatActivity);
             this.progressBar = new CircleProgress(this.appCompatActivity);
+            this.progressBar.setId(R.id.progress_bar_id);
 
             this.topView.setLayoutParams(
                     new ViewGroup.LayoutParams(
@@ -86,6 +87,10 @@ public class ProgressHelper implements View.OnTouchListener {
         this.topView.removeAllViews();
         this.topView.addView(this.progressBar);
         this.rootView.addView(this.topView);
+    }
+
+    public void updateProgressCircleColor() {
+        this.progressBar.updateCircle();
     }
 
     public static class Builder {

@@ -9,6 +9,7 @@
     <!-- menu -->
     <string name="menu_option_about">關於</string>
     <string name="menu_option_settings">設定</string>
+    <string name="menu_option_pickup">選擇顏色</string>
 
     <!-- media_tab_layout -->
     <string name="tab_layout_media_title_1">音樂家</string>

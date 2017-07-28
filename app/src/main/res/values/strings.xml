@@ -8,11 +8,14 @@
     <string name="app_action_contacts">與我聯繫</string>
 
     <string name="app_about_xavier">目前從事電商產品的應用程式開發，喜愛程式開發與學習。由於從小學習鋼琴，對於古典音樂有莫名地熱忱，希望藉由這個應用程式，除了分享經典的古典曲目外，還能讓聽者聆賞更多值得欣賞的音樂作品。</string>
+    <string name="app_about_xavier_name">Xavier Yin</string>
     <string name="app_about_xavier_email">xavier0507.yin@gmail.com</string>
     <string name="app_about_jim">現在任職於國內知名廣告行銷公司，擔任產品與專案經理，也曾在生技公司負責IT與專案管理一職，擅長專案規劃與分析的細膩工作。</string>
+    <string name="app_about_jim_name">Jim Hsieh</string>
     <string name="app_about_jim_email">ab8246cd@gmail.com</string>
+
     <string name="app_about_thanks_title">誠摯感謝</string>
-    <string name="app_about_thanks_iron">感謝Iron Lee設計的精美圖片</string>
+    <string name="app_about_thanks_iron">感謝Iron Lee的精美設計與獨特品味</string>
     <string name="app_about_thanks_users">感謝您使用Cadenza聆賞古典音樂</string>
 
     <array name="main_list">

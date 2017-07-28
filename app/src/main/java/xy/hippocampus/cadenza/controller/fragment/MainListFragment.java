@@ -1,15 +1,11 @@
 package xy.hippocampus.cadenza.controller.fragment;
 
 import android.content.Intent;
-import android.os.Build;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.transition.Fade;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -20,6 +16,7 @@ import java.util.List;
 
 import xy.hippocampus.cadenza.R;
 import xy.hippocampus.cadenza.controller.activity.app.CadenzaApplication;
+import xy.hippocampus.cadenza.controller.activity.common.HomeActivity;
 import xy.hippocampus.cadenza.controller.adapter.base.BaseRVAdapter;
 import xy.hippocampus.cadenza.controller.adapter.base.IOnClickedListener;
 import xy.hippocampus.cadenza.controller.adapter.helper.MainListAdapterSpanSizeLookup;
@@ -33,7 +30,7 @@ import xy.hippocampus.cadenza.model.database.mainlist.DataSourceHelper;
 import xy.hippocampus.cadenza.model.database.mainlist.FirebaseDataSourceImp;
 import xy.hippocampus.cadenza.model.database.mainlist.LocalDataSourceImp;
 import xy.hippocampus.cadenza.util.FragmentUtil;
-import xy.hippocampus.cadenza.view.ImageViewTransition;
+import xy.hippocampus.cadenza.view.theme.ColorSettings;
 
 import static xy.hippocampus.cadenza.model.constant.Constants.FRAG_ABOUT_TAG;
 import static xy.hippocampus.cadenza.model.constant.Constants.FRAG_MAIN_LIST_TAG;
@@ -69,9 +66,15 @@ public class MainListFragment extends BaseFragment implements IOnClickedListener
                         FRAG_ABOUT_TAG);
                 break;
 
-//            case R.id.action_settings:
-//                Toast.makeText(this.getActivity(), "Settings", Toast.LENGTH_SHORT).show();
-//                return true;
+            case R.id.action_settings:
+                new ColorSettings((HomeActivity) this.getActivity()).pickUpColor(R.string.menu_option_pickup, new ColorSettings.Callback() {
+                    @Override
+                    public void onColorSelected(int color) {
+                        updateTheme();
+                        updateUiElements();
+                    }
+                });
+                break;
 
             default:
                 return super.onOptionsItemSelected(item);
@@ -104,7 +107,6 @@ public class MainListFragment extends BaseFragment implements IOnClickedListener
         super.assignViewSettings(root);
 
         this.addDataSourceStrategy();
-
         ((AppCompatActivity) this.getActivity()).setSupportActionBar(this.toolbar);
         this.toolbar.setNavigationIcon(R.drawable.ic_clef_note);
 
@@ -157,10 +159,6 @@ public class MainListFragment extends BaseFragment implements IOnClickedListener
         this.getProgressCallback().notifyProgressDisappear();
     }
 
-    public static MainListFragment newInstance() {
-        return new MainListFragment();
-    }
-
     private void addDataSourceStrategy() {
         boolean isFirebaseSource = CadenzaApplication.isFirebaseSource();
 
@@ -183,5 +181,9 @@ public class MainListFragment extends BaseFragment implements IOnClickedListener
 
             this.getProgressCallback().notifyProgressDisappear();
         }
+    }
+
+    public static MainListFragment newInstance() {
+        return new MainListFragment();
     }
 }

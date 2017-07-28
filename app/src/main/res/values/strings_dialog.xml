@@ -10,4 +10,8 @@
     <string name="exit_dialog_title">結束程式</string>
     <string name="exit_dialog_message">確定離開Cadenza嗎？</string>
 
+    <!-- Update Dialog -->
+    <string name="update_dialog_title">應用程式更新</string>
+    <string name="update_dialog_message">為了有更好的體驗，請按確認後下載最新版本。</string>
+
 </resources>

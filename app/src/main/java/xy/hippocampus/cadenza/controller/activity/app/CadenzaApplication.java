@@ -29,6 +29,7 @@ public class CadenzaApplication extends Application {
     private static boolean mIsForceUpdate;
     private static boolean mIsFirebaseSource;
     private static String mAppVersion;
+    private static String mUpdateUrl;
 
     @Override
     public void onCreate() {
@@ -53,10 +54,6 @@ public class CadenzaApplication extends Application {
         mIsForceUpdate = isForceUpdate;
     }
 
-    public static String getAppVersion() {
-        return mAppVersion;
-    }
-
     public static boolean isFirebaseSource() {
         return mIsFirebaseSource;
     }
@@ -69,6 +66,18 @@ public class CadenzaApplication extends Application {
         mAppVersion = AppVersion;
     }
 
+    public static String getAppVersion() {
+        return mAppVersion;
+    }
+
+    public static void setUpdateUrl(String updateUrl) {
+        mUpdateUrl = updateUrl;
+    }
+
+    public static String getUpdateUrl() {
+        return mUpdateUrl;
+    }
+
     private void init() {
         CadenzaApplication.cadenzaContext = this;
         CadenzaApplication.cadenzaResources = this.getResources();
@@ -76,7 +85,7 @@ public class CadenzaApplication extends Application {
 
     private void obtainRemoteConfig() {
         this.firebaseRemoteConfig = FirebaseRemoteConfig.getInstance();
-        this.remoteConfigSettings = new FirebaseRemoteConfigSettings.Builder().setDeveloperModeEnabled(false).build();
+        this.remoteConfigSettings = new FirebaseRemoteConfigSettings.Builder().setDeveloperModeEnabled(true).build();
         this.firebaseRemoteConfig.setConfigSettings(this.remoteConfigSettings);
 
         if (this.firebaseRemoteConfig.getInfo().getConfigSettings().isDeveloperModeEnabled()) {
@@ -92,14 +101,17 @@ public class CadenzaApplication extends Application {
                     boolean isForceUpdate = firebaseRemoteConfig.getBoolean("isForceUpdate");
                     boolean isFirebaseSource = firebaseRemoteConfig.getBoolean("isFirebaseSource");
                     String appVersion = firebaseRemoteConfig.getString("version");
+                    String updateUrl = firebaseRemoteConfig.getString("updateUrl");
 
                     setForceUpdate(isForceUpdate);
                     setFirebaseSource(isFirebaseSource);
                     setAppVersion(appVersion);
+                    setUpdateUrl(updateUrl);
 
                     logUtil.i("isForceUpdate: " + isForceUpdate);
                     logUtil.i("isFirebaseSource: " + isFirebaseSource);
                     logUtil.i("version: " + appVersion);
+                    logUtil.i("updateUrl: " + updateUrl);
                 }
             }
         });
