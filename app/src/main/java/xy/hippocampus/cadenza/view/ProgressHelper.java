@@ -46,6 +46,7 @@ public class ProgressHelper implements View.OnTouchListener {
     }
 
     public void showProgressBar() {
+        this.updateProgressCircleColor();
         this.topView.setVisibility(View.VISIBLE);
     }
 

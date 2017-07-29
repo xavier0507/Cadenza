@@ -129,7 +129,7 @@ public class CircleProgress extends View {
     public void updateCircle() {
         this.color = Color.parseColor("#" + Integer.toHexString(ColorPalette.getColorSuite(this.context, PrefsManager.getInstance(((Activity) this.context)).acquirePrimaryColor())[2]));
 
-        for (int i = 0; i < this.numberOfCircle; i++) {
+        for (int i = 0; this.circles != null && i < this.circles.length; i++) {
             this.circles[i].setColor(this.color);
         }
     }

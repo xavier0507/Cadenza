@@ -29,6 +29,14 @@ public class HomeActivity extends BaseEPMIActivity implements INotifyProgress {
 
     private ProgressHelper progressHelper;
 
+    public static void updateAllTheme() {
+        for (Fragment fragment : FragmentStackManager.getInstance().getValues()) {
+            if (fragment != null) {
+                ((BaseFragment) fragment).notifyChangeTheme();
+            }
+        }
+    }
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         savedInstanceState = null;
@@ -92,7 +100,6 @@ public class HomeActivity extends BaseEPMIActivity implements INotifyProgress {
     @Override
     public void notifyProgressAppear(boolean isBlocked) {
         this.progressHelper.changeBlockStatus(isBlocked);
-        this.progressHelper.updateProgressCircleColor();
         this.progressHelper.showProgressBar();
     }
 
