@@ -201,9 +201,13 @@ public abstract class BaseEPMIActivity extends BaseActivity implements EasyPermi
         if (isForceUpdate) {
             this.checkoutVersion();
         } else {
-            this.onSuccess();
-            this.isCheckingAccountStatus = false;
+            this.verifySuccessfully();
         }
+    }
+
+    protected void verifySuccessfully() {
+        this.onSuccess();
+        this.isCheckingAccountStatus = false;
     }
 
     protected void checkoutVersion() {
@@ -215,6 +219,8 @@ public abstract class BaseEPMIActivity extends BaseActivity implements EasyPermi
 
         if (!AppInfoUtil.isLastVersionOnLocalSide(localVersion, remoteVersion)) {
             this.showUpdateDialog();
+        } else {
+            this.verifySuccessfully();
         }
     }
 
