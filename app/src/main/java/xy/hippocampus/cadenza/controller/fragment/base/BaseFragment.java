@@ -91,7 +91,7 @@ public abstract class BaseFragment extends Fragment {
     }
 
     protected void updateTheme() {
-        this.primaryColor = prefsManager.acquirePrimaryColor();
+        this.primaryColor = this.prefsManager.acquirePrimaryColor();
         this.primaryDarkColor = ColorPalette.getColorSuite(this.getActivity(), this.primaryColor)[0];
         this.accentColor = ColorPalette.getColorSuite(this.getActivity(), this.primaryColor)[2];
     }
@@ -131,6 +131,11 @@ public abstract class BaseFragment extends Fragment {
 
     public String getCurrentVersion() {
         return BuildConfig.VERSION_NAME;
+    }
+
+    public void notifyChangeTheme() {
+        this.updateTheme();
+        this.updateUiElements();
     }
 
     public static void setINotifyProgress(INotifyProgress notifyProgress) {

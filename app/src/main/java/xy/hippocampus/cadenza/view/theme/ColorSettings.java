@@ -63,7 +63,6 @@ public class ColorSettings extends ThemeSettings {
 
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                PrefsManager.getInstance(getActivity()).putPrimaryColor(colorPicker.getColor());
                 callback.onColorSelected(colorPicker.getColor());
             }
         });

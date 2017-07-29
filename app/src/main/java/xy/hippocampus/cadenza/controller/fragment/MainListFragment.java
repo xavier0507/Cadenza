@@ -23,6 +23,7 @@ import xy.hippocampus.cadenza.controller.adapter.helper.MainListAdapterSpanSizeL
 import xy.hippocampus.cadenza.controller.adapter.recycler.MainListItemRVAdapter;
 import xy.hippocampus.cadenza.controller.fragment.base.BaseFragment;
 import xy.hippocampus.cadenza.controller.manager.FragmentStackManager;
+import xy.hippocampus.cadenza.controller.manager.PrefsManager;
 import xy.hippocampus.cadenza.model.bean.ErrorMessage;
 import xy.hippocampus.cadenza.model.bean.MainListItemInfo;
 import xy.hippocampus.cadenza.model.database.base.IDataSourceStrategy;
@@ -68,10 +69,11 @@ public class MainListFragment extends BaseFragment implements IOnClickedListener
 
             case R.id.action_settings:
                 new ColorSettings((HomeActivity) this.getActivity()).pickUpColor(R.string.menu_option_pickup, new ColorSettings.Callback() {
+
                     @Override
                     public void onColorSelected(int color) {
-                        updateTheme();
-                        updateUiElements();
+                        PrefsManager.getInstance(getActivity()).putPrimaryColor(color);
+                        HomeActivity.updateAllTheme();
                     }
                 });
                 break;
@@ -119,6 +121,8 @@ public class MainListFragment extends BaseFragment implements IOnClickedListener
     @Override
     public void onResume() {
         super.onResume();
+
+        this.logUtil.i("MainList onResume");
 
         if (!FragmentStackManager.getInstance().includesKey(FRAG_MAIN_LIST_TAG)) {
             FragmentStackManager.getInstance().pushFragment(FRAG_MAIN_LIST_TAG, this);
