@@ -1,4 +1,4 @@
-package xy.hippocampus.cadenza.view;
+package xy.hippocampus.cadenza.view.player;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
@@ -205,8 +205,8 @@ public class MediaPlayerPanel extends LinearLayout {
         params.height = this.originalHeight * 2;
         this.playerPanelView.setLayoutParams(params);
 
-        this.mediaPlayerPanelHeader.setOnTouchListener(this.onTouchListenerForBlockingEventThroughtout);
-        this.mediaPlayerPanelController.setOnTouchListener(this.onTouchListenerForBlockingEventThroughtout);
+        this.mediaPlayerPanelHeader.setOnTouchListener(this.onTouchListenerForBlockingEventThroughout);
+        this.mediaPlayerPanelController.setOnTouchListener(this.onTouchListenerForBlockingEventThroughout);
     }
 
     private void updateVideoView(int newMarginY) {
@@ -491,7 +491,8 @@ public class MediaPlayerPanel extends LinearLayout {
     /**
      * Inner Classes
      */
-    private OnTouchListener onTouchListenerForBlockingEventThroughtout = new OnTouchListener() {
+    private OnTouchListener onTouchListenerForBlockingEventThroughout = new OnTouchListener() {
+
         @Override
         public boolean onTouch(View v, MotionEvent event) {
             return true;

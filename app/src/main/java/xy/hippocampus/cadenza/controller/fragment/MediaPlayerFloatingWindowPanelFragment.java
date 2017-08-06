@@ -32,7 +32,7 @@ import static xy.hippocampus.cadenza.model.constant.Constants.FRAG_YOUTUBE_TAG;
  * Created by Xavier Yin on 2017/6/28.
  */
 
-public class MediaPlayerPanelFragment extends BaseFragment implements MediaPlayerPanel.PlayerCallback, View.OnClickListener, YouTubePlayer.OnInitializedListener {
+public class MediaPlayerFloatingWindowPanelFragment extends BaseFragment implements MediaPlayerPanel.PlayerCallback, View.OnClickListener, YouTubePlayer.OnInitializedListener {
     private PlaylistManager playlistManager = PlaylistManager.getInstance();
     private PrefsManager prefsManager = PrefsManager.getInstance(this.getActivity());
     private YouTubePlayerSupportFragment youTubePlayerFragment;
@@ -55,7 +55,7 @@ public class MediaPlayerPanelFragment extends BaseFragment implements MediaPlaye
     private TextView playTotalTimeTextView;
     private SeekBar seekBar;
 
-    private YouTubePlayer player;
+    public static YouTubePlayer player;
     private Handler playTimeTextHandler;
     private Handler seekTimeHandler;
 
@@ -296,7 +296,7 @@ public class MediaPlayerPanelFragment extends BaseFragment implements MediaPlaye
                         }
                     }
                 } catch (Exception e) {
-                    this.youTubePlayerFragment.initialize(API_KEY, MediaPlayerPanelFragment.this);
+                    this.youTubePlayerFragment.initialize(API_KEY, MediaPlayerFloatingWindowPanelFragment.this);
                 }
                 break;
 
@@ -658,7 +658,7 @@ public class MediaPlayerPanelFragment extends BaseFragment implements MediaPlaye
                     isTouched = false;
                 }
             } catch (IllegalStateException e) {
-                youTubePlayerFragment.initialize(API_KEY, MediaPlayerPanelFragment.this);
+                youTubePlayerFragment.initialize(API_KEY, MediaPlayerFloatingWindowPanelFragment.this);
             }
         }
     };

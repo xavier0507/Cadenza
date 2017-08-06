@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+<heade>
+    <meta content="origin" name="referrer">
+
+    <style type="text/css">
+        div {
+            .video-container {
+                position: relative;
+                padding-bottom: 56.25%;
+                padding-top: 30px;
+                height: 0;
+                overflow: hidden;
+            }
+        }
+
+        .video-container iframe,
+        .video-container object,
+        .video-container embed {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+</heade>
+
+<body>
+    <div class="video-container">
+        <iframe id="existing-iframe-example" width="100%" height="100%" src="https://www.youtube.com/embed/$VIDEO_ID$ + ?rel=0&enablejsapi=1&showinfo=0&controls=2" frameborder="0"></iframe>
+    </div>
+
+    <script type="text/javascript">
+        var playVideoId;
+        function init(id) {
+            playVideoId = id
+            Android.showCurrentPlayId(playVideoId);
+            launchYoutube();
+        }
+
+        function launchYoutube() {
+            var tag = document.createElement('script');
+            tag.id = 'iframe-demo';
+            tag.src = 'https://www.youtube.com/iframe_api';
+            var firstScriptTag = document.getElementsByTagName('script')[0];
+            firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+        }
+
+        var player;
+        function onYouTubeIframeAPIReady() {
+            player = new YT.Player('existing-iframe-example', {
+                height: '100%',
+                width: '100%',
+                html5: 0,
+                playerVars: {
+                    'enablejsapi': 1,
+                    'showinfo': 0,
+                    'rel': 0,
+                    'loop': 0,
+                    'autoplay': 1,
+                    'controls': 1
+                },
+                events: {
+                    'onReady': onPlayerReady,
+                    'onStateChange': onPlayerStateChange,
+                    'onError': onPlayerError
+                }
+            });
+        }
+
+        function onPlayerReady(event) {
+            player.cueVideoById(playVideoId);
+            player.playVideo();
+            player.unMute();
+        }
+
+        function onPlayerStateChange(event) {
+            checkoutCurrentStatus(event.data);
+        }
+
+        function checkoutCurrentStatus(playerStatus) {
+            var status;
+            if (playerStatus == -1) {
+                status = "0009"; // unstarted
+            } else if (playerStatus == 0) {
+                status = "0010"; // ended
+            } else if (playerStatus == 1) {
+                status = "0011"; // playing
+            } else if (playerStatus == 2) {
+                status = "0012"; // paused
+            } else if (playerStatus == 3) {
+                status = "0013"; // buffering
+            } else if (playerStatus == 5) {
+                status = "0015"; // video cued
+            }
+
+            passCurrentPlayerStatus(status);
+        }
+
+        function passCurrentPlayerStatus(status) {
+            Android.showCurrentPlayerStatus(status);
+        }
+
+        function onPlayerError(event) {
+            checkoutError(event.data);
+        }
+
+        function checkoutError(errorStatus) {
+            <!--var status;-->
+            <!--if (errorStatus == 2) {-->
+                <!--status = "invalid parameter value";-->
+            <!--} else if (errorStatus == 5) {-->
+                <!--status = "cannot be played in an HTML5 player";-->
+            <!--} else if (errorStatus == 100) {-->
+                <!--status = "The video requested was not found.";-->
+            <!--} else if (errorStatus == 101) {-->
+                <!--status = "not allow it to be played in embedded players.";-->
+            <!--} else if (errorStatus == 150) {-->
+                <!--status = "the same as 101";-->
+            <!--}-->
+
+            passError(errorStatus);
+        }
+
+        function passError(error) {
+            Android.showError(error);
+        }
+
+        function closePlayer() {
+            player.stopVideo();
+        }
+    </script>
+</body>
+
+</html>

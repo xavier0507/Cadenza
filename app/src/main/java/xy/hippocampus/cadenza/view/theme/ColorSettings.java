@@ -6,7 +6,6 @@ import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import uz.shift.colorpicker.LineColorPicker;
 import uz.shift.colorpicker.OnColorChangedListener;
@@ -14,7 +13,6 @@ import xy.hippocampus.cadenza.R;
 import xy.hippocampus.cadenza.controller.activity.common.HomeActivity;
 import xy.hippocampus.cadenza.controller.manager.PrefsManager;
 import xy.hippocampus.cadenza.util.ColorPalette;
-import xy.hippocampus.cadenza.util.LogUtil;
 
 /**
  * Created by Xavier Yin on 2017/7/28.

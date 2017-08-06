@@ -4,22 +4,16 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Handler;
-import android.support.v7.app.AlertDialog;
 import android.view.ViewGroup;
 import android.view.animation.DecelerateInterpolator;
 import android.view.animation.OvershootInterpolator;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import xy.hippocampus.cadenza.BuildConfig;
 import xy.hippocampus.cadenza.R;
-import xy.hippocampus.cadenza.controller.activity.app.CadenzaApplication;
 import xy.hippocampus.cadenza.controller.activity.common.base.BaseEPMIActivity;
-import xy.hippocampus.cadenza.util.AppInfoUtil;
 
 /**
  * Created by Xavier Yin on 2017/7/10.

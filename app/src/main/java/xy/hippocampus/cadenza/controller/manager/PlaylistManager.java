@@ -81,6 +81,10 @@ public class PlaylistManager {
         return itemList.get(currentPlayingItemIndex);
     }
 
+    public int getCurrentIndex() {
+        return currentPlayingItemIndex;
+    }
+
     public int getItemListSize() {
         return itemList.size();
     }
