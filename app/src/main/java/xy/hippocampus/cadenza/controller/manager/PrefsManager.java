@@ -1,6 +1,5 @@
 package xy.hippocampus.cadenza.controller.manager;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.support.v4.content.ContextCompat;
@@ -20,14 +19,14 @@ public class PrefsManager {
 
     private static PrefsManager instance = null;
 
-    private Activity activity;
+    private Context context;
 
-    private PrefsManager(Activity activity) {
-        this.activity = activity;
+    private PrefsManager(Context context) {
+        this.context = context;
     }
 
-    public synchronized static final PrefsManager getInstance(Activity activity) {
-        return instance = ((instance != null) ? instance : new PrefsManager(activity));
+    public synchronized static final PrefsManager getInstance(Context context) {
+        return instance = ((instance != null) ? instance : new PrefsManager(context));
     }
 
     /**
@@ -38,12 +37,12 @@ public class PrefsManager {
     }
 
     public String acquireAccountName() {
-        SharedPreferences preferences = this.activity.getPreferences(Context.MODE_PRIVATE);
+        SharedPreferences preferences = this.context.getSharedPreferences(PREF_ACCOUNT_NAME, Context.MODE_PRIVATE);
         return preferences.getString(PREF_ACCOUNT_NAME, null);
     }
 
     public void clearAccountName() {
-        SharedPreferences settings = this.activity.getPreferences(Context.MODE_PRIVATE);
+        SharedPreferences settings =  this.context.getSharedPreferences(PREF_ACCOUNT_NAME, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = settings.edit();
         editor.remove(PREF_ACCOUNT_NAME);
         editor.apply();
@@ -57,12 +56,12 @@ public class PrefsManager {
     }
 
     public boolean acquireLoginPopupMessageStatus() {
-        SharedPreferences preferences = this.activity.getPreferences(Context.MODE_PRIVATE);
+        SharedPreferences preferences = this.context.getSharedPreferences(PREF_LOGIN_POPUP_MESSAGE, Context.MODE_PRIVATE);
         return preferences.getBoolean(PREF_LOGIN_POPUP_MESSAGE, false);
     }
 
     public void clearPopupMessageStatus() {
-        SharedPreferences settings = this.activity.getPreferences(Context.MODE_PRIVATE);
+        SharedPreferences settings = this.context.getSharedPreferences(PREF_LOGIN_POPUP_MESSAGE, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = settings.edit();
         editor.remove(PREF_LOGIN_POPUP_MESSAGE);
         editor.apply();
@@ -71,25 +70,25 @@ public class PrefsManager {
     /**
      * Is Shuffle Area
      */
-    public void putIsShuffleStatus(boolean isShowShuffle) {
-        this.putBooleanContents(PREF_IS_SHUFFLE, isShowShuffle);
+    public void putIsShuffleStatus(boolean isShuffleMode) {
+        this.putBooleanContents(PREF_IS_SHUFFLE, isShuffleMode);
     }
 
     public boolean acquireIsShuffleStatus() {
-        SharedPreferences preferences = this.activity.getPreferences(Context.MODE_PRIVATE);
-        return preferences.getBoolean(PREF_IS_SHUFFLE, true);
+        SharedPreferences preferences = this.context.getSharedPreferences(PREF_IS_SHUFFLE, Context.MODE_PRIVATE);
+        return preferences.getBoolean(PREF_IS_SHUFFLE, false);
     }
 
     /**
      * Is RepeatOne Area
      */
-    public void putIsRepeatOneStatus(boolean isShowRepeatOne) {
-        this.putBooleanContents(PREF_IS_REPEAT_ONE, isShowRepeatOne);
+    public void putIsRepeatOneStatus(boolean isRepeatOneMode) {
+        this.putBooleanContents(PREF_IS_REPEAT_ONE, isRepeatOneMode);
     }
 
     public boolean acquireIsRepeatOneStatus() {
-        SharedPreferences preferences = this.activity.getPreferences(Context.MODE_PRIVATE);
-        return preferences.getBoolean(PREF_IS_REPEAT_ONE, true);
+        SharedPreferences preferences = this.context.getSharedPreferences(PREF_IS_REPEAT_ONE, Context.MODE_PRIVATE);
+        return preferences.getBoolean(PREF_IS_REPEAT_ONE, false);
     }
 
     /**
@@ -100,29 +99,29 @@ public class PrefsManager {
     }
 
     public int acquirePrimaryColor() {
-        SharedPreferences preferences = this.activity.getPreferences(Context.MODE_PRIVATE);
-        return preferences.getInt(PREF_PRIMARY_COLOR, ContextCompat.getColor(this.activity, R.color.colorPrimary));
+        SharedPreferences preferences = this.context.getSharedPreferences(PREF_PRIMARY_COLOR, Context.MODE_PRIVATE);
+        return preferences.getInt(PREF_PRIMARY_COLOR, ContextCompat.getColor(this.context, R.color.colorPrimary));
     }
 
     /**
      * Private Methods
      */
     private void putStringContents(String key, String value) {
-        SharedPreferences settings = this.activity.getPreferences(Context.MODE_PRIVATE);
+        SharedPreferences settings = this.context.getSharedPreferences(key, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = settings.edit();
         editor.putString(key, value);
         editor.apply();
     }
 
     private void putBooleanContents(String key, boolean value) {
-        SharedPreferences settings = this.activity.getPreferences(Context.MODE_PRIVATE);
+        SharedPreferences settings = this.context.getSharedPreferences(key, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = settings.edit();
         editor.putBoolean(key, value);
         editor.apply();
     }
 
     private void putIntContents(String key, int value) {
-        SharedPreferences settings = this.activity.getPreferences(Context.MODE_PRIVATE);
+        SharedPreferences settings = this.context.getSharedPreferences(key, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = settings.edit();
         editor.putInt(key, value);
         editor.apply();

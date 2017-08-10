@@ -15,7 +15,7 @@ import java.util.List;
 
 import xy.hippocampus.cadenza.R;
 import xy.hippocampus.cadenza.controller.activity.app.CadenzaApplication;
-import xy.hippocampus.cadenza.controller.activity.common.HomeActivity;
+import xy.hippocampus.cadenza.controller.activity.common.mode.slanting.HomeActivity;
 import xy.hippocampus.cadenza.controller.adapter.base.BaseRVAdapter;
 import xy.hippocampus.cadenza.controller.adapter.base.IOnClickedListener;
 import xy.hippocampus.cadenza.controller.adapter.helper.MainListAdapterSpanSizeLookup;

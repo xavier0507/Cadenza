@@ -20,8 +20,8 @@ public class ProgressHelper implements View.OnTouchListener {
 
     private AppCompatActivity appCompatActivity;
 
-    private FrameLayout rootView;
-    private FrameLayout topView;
+    private ViewGroup rootView;
+    private ViewGroup topView;
     private CircleProgress progressBar;
 
     private boolean isBlocked;
@@ -41,13 +41,13 @@ public class ProgressHelper implements View.OnTouchListener {
         return this.isBlocked;
     }
 
-    public void hideProgressBar() {
-        this.topView.setVisibility(View.GONE);
-    }
-
     public void showProgressBar() {
         this.updateProgressCircleColor();
         this.topView.setVisibility(View.VISIBLE);
+    }
+
+    public void hideProgressBar() {
+        this.topView.setVisibility(View.GONE);
     }
 
     public void changeBlockStatus(boolean isBlocked) {
@@ -77,7 +77,7 @@ public class ProgressHelper implements View.OnTouchListener {
     }
 
     private void findRoot() {
-        this.rootView = (FrameLayout) this.appCompatActivity.findViewById(R.id.frag_media_player);
+        this.rootView = (ViewGroup) this.appCompatActivity.findViewById(R.id.attached_root);
 
         if (this.rootView == null) {
             throw new RuntimeException("缺少RootView");

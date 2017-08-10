@@ -10,7 +10,7 @@ import android.widget.TextView;
 import uz.shift.colorpicker.LineColorPicker;
 import uz.shift.colorpicker.OnColorChangedListener;
 import xy.hippocampus.cadenza.R;
-import xy.hippocampus.cadenza.controller.activity.common.HomeActivity;
+import xy.hippocampus.cadenza.controller.activity.common.mode.slanting.HomeActivity;
 import xy.hippocampus.cadenza.controller.manager.PrefsManager;
 import xy.hippocampus.cadenza.util.ColorPalette;
 

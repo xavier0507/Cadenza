@@ -12,12 +12,14 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 
 import xy.hippocampus.cadenza.R;
+import xy.hippocampus.cadenza.controller.manager.PrefsManager;
+import xy.hippocampus.cadenza.util.ColorPalette;
 import xy.hippocampus.cadenza.util.LogUtil;
 
 import static android.content.Context.WINDOW_SERVICE;
-import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
 
 /**
  * Created by Xavier Yin on 2017/7/31.
@@ -25,17 +27,17 @@ import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
 
 public class FloatingWindowMediaPlayerPanel extends LinearLayout implements View.OnClickListener {
     private static final LogUtil logUtil = LogUtil.getInstance(FloatingWindowMediaPlayerPanel.class);
-    private static final int CLICK_ACTION_THRESHOLD = 100;
+    private static final int CLICK_ACTION_THRESHOLD = 50;
+
+    private Context context;
 
     private WindowManager.LayoutParams updatedParameters;
     private PlayCallback playCallback;
 
-    private double x;
-    private double y;
-    private double pressedX;
-    private double pressedY;
-
-    private Context context;
+    private PlayerViewPropertyManager playerViewPropertyManager;
+    private WindowManager windowManager;
+    private TouchHelper touchHelper;
+    private PrefsManager prefsManager;
 
     private View mediaPlayerPanelParent;
     private View mediaPlayerPanelHeader;
@@ -44,21 +46,31 @@ public class FloatingWindowMediaPlayerPanel extends LinearLayout implements View
 
     private ImageButton scaleBtn;
     private ImageButton closeBtn;
+    private ImageButton shuffleBtn;
+    private ImageButton sequenceBtn;
     private ImageButton prevBtn;
+    private ImageButton playBtn;
+    private ImageButton pauseBtn;
     private ImageButton nextBtn;
+    private ImageButton repeatOneBtn;
+    private ImageButton loopAllBtn;
 
+    private int mediaPanelColor;
     private int originalWidth;
     private int originalHeight;
+    private int enlargedWidth;
+    private int enlargedHeight;
     private int narrowedWidth;
     private int narrowedHeight;
+
+    private double x;
+    private double y;
+    private double pressedX;
+    private double pressedY;
 
     private boolean isFirstMeasure = true;
     private boolean isEnlarged;
     private boolean isClicked;
-
-    private PlayerViewPropertyManager playerViewPropertyManager;
-    private WindowManager windowManager;
-    private TouchHelper touchHelper;
 
     public FloatingWindowMediaPlayerPanel(Context context) {
         this(context, null);
@@ -90,14 +102,28 @@ public class FloatingWindowMediaPlayerPanel extends LinearLayout implements View
 
         this.scaleBtn = (ImageButton) this.findViewById(R.id.media_player_panel_btn_scale);
         this.closeBtn = (ImageButton) this.findViewById(R.id.media_player_panel_btn_close);
-
+        this.shuffleBtn = (ImageButton) this.findViewById(R.id.media_player_panel_btn_shuffle);
+        this.sequenceBtn = (ImageButton) this.findViewById(R.id.media_player_panel_btn_sequence);
         this.prevBtn = (ImageButton) this.findViewById(R.id.media_player_panel_btn_prev);
+        this.playBtn = (ImageButton) this.findViewById(R.id.media_player_panel_btn_play);
+        this.pauseBtn = (ImageButton) this.findViewById(R.id.media_player_panel_btn_pause);
         this.nextBtn = (ImageButton) this.findViewById(R.id.media_player_panel_btn_next);
+        this.repeatOneBtn = (ImageButton) this.findViewById(R.id.media_player_panel_btn_repeat_one);
+        this.loopAllBtn = (ImageButton) this.findViewById(R.id.media_player_panel_btn_loop_all);
+
+        this.mediaPlayerPanelHeader.setBackgroundColor(this.mediaPanelColor);
+        this.mediaPlayerPanelController.setBackgroundColor(this.mediaPanelColor);
 
         this.scaleBtn.setOnClickListener(this);
         this.closeBtn.setOnClickListener(this);
+        this.shuffleBtn.setOnClickListener(this);
+        this.sequenceBtn.setOnClickListener(this);
         this.prevBtn.setOnClickListener(this);
+        this.playBtn.setOnClickListener(this);
+        this.pauseBtn.setOnClickListener(this);
         this.nextBtn.setOnClickListener(this);
+        this.repeatOneBtn.setOnClickListener(this);
+        this.loopAllBtn.setOnClickListener(this);
 
         this.playerViewPropertyManager = new PlayerViewPropertyManager();
     }
@@ -106,15 +132,30 @@ public class FloatingWindowMediaPlayerPanel extends LinearLayout implements View
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
 
+        this.logUtil.i("before originalWidth: " + this.getMeasuredWidth());
+        this.logUtil.i("before originalHeight: " + this.getMeasuredHeight());
+
         if (this.isFirstMeasure) {
             this.originalWidth = this.getMeasuredWidth();
             this.originalHeight = this.getMeasuredHeight();
 
-            this.narrowedWidth = (int) (this.getMeasuredWidth() * 0.58);
-            this.narrowedHeight = (int) ((this.getMeasuredHeight() - this.mediaPlayerPanelHeader.getMeasuredHeight() - this.mediaPlayerPanelController.getMeasuredHeight()) * 0.68);
+            RelativeLayout.LayoutParams mediaPlayerPanelLayoutParams = (RelativeLayout.LayoutParams) this.mediaPlayerPanel.getLayoutParams();
+            mediaPlayerPanelLayoutParams.width = this.getMeasuredWidth();
+            mediaPlayerPanelLayoutParams.height = (int) (this.getMeasuredWidth() * 0.6f);
+            this.mediaPlayerPanel.setLayoutParams(mediaPlayerPanelLayoutParams);
 
-            this.logUtil.i("header height: " + this.mediaPlayerPanelHeader.getMeasuredHeight());
-            this.logUtil.i("controller height: " + this.mediaPlayerPanelController.getMeasuredHeight());
+            int mediaPlayerPanelHeaderHeight = this.mediaPlayerPanelHeader.getMeasuredHeight();
+            int mediaPlayerPanelHeight = this.mediaPlayerPanel.getMeasuredHeight();
+            int mediaPlayerPanelControllerHeight = this.mediaPlayerPanelController.getMeasuredHeight();
+
+            this.logUtil.i("mediaPlayerPanelHeader height: " + mediaPlayerPanelHeaderHeight);
+            this.logUtil.i("mediaPlayerPanel height: " + mediaPlayerPanelHeight);
+            this.logUtil.i("mediaPlayerPanelController height: " + mediaPlayerPanelControllerHeight);
+
+            this.enlargedWidth = this.originalWidth;
+            this.enlargedHeight = this.originalHeight + mediaPlayerPanelHeaderHeight + mediaPlayerPanelHeight + mediaPlayerPanelControllerHeight;
+            this.narrowedWidth = (int) (this.enlargedWidth * 0.38f);
+            this.narrowedHeight = (int) (this.narrowedWidth * 0.68f);
 
             LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) this.mediaPlayerPanelParent.getLayoutParams();
             layoutParams.width = this.narrowedWidth;
@@ -133,19 +174,43 @@ public class FloatingWindowMediaPlayerPanel extends LinearLayout implements View
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.media_player_panel_btn_scale:
-                this.startNarrowAnim();
+                this.playCallback.onScale();
                 break;
 
             case R.id.media_player_panel_btn_close:
-                this.playCallback.close();
+                this.playCallback.onClose();
+                break;
+
+            case R.id.media_player_panel_btn_shuffle:
+                this.playCallback.onShuffle();
+                break;
+
+            case R.id.media_player_panel_btn_sequence:
+                this.playCallback.onSequence();
                 break;
 
             case R.id.media_player_panel_btn_prev:
                 this.playCallback.playPrev();
                 break;
 
+            case R.id.media_player_panel_btn_play:
+                this.playCallback.play();
+                break;
+
+            case R.id.media_player_panel_btn_pause:
+                this.playCallback.pause();
+                break;
+
             case R.id.media_player_panel_btn_next:
                 this.playCallback.playNext();
+                break;
+
+            case R.id.media_player_panel_btn_repeat_one:
+                this.playCallback.onRepeatOne();
+                break;
+
+            case R.id.media_player_panel_btn_loop_all:
+                this.playCallback.onLoopAll();
                 break;
         }
     }
@@ -165,10 +230,11 @@ public class FloatingWindowMediaPlayerPanel extends LinearLayout implements View
     public void startEnlargeAnim() {
         AnimatorSet animatorSet = new AnimatorSet();
         animatorSet.playTogether(
-                ObjectAnimator.ofFloat(this.playerViewPropertyManager, "width", this.narrowedWidth, this.originalWidth),
-                ObjectAnimator.ofFloat(this.playerViewPropertyManager, "height", this.narrowedHeight, this.originalHeight)
+                ObjectAnimator.ofFloat(this.playerViewPropertyManager, "width", this.narrowedWidth, this.enlargedWidth),
+                ObjectAnimator.ofFloat(this.playerViewPropertyManager, "height", this.narrowedHeight, this.enlargedHeight)
         );
         animatorSet.addListener(new AnimatorListenerAdapter() {
+
             @Override
             public void onAnimationEnd(Animator animation) {
                 mediaPlayerPanelHeader.setVisibility(View.VISIBLE);
@@ -183,14 +249,19 @@ public class FloatingWindowMediaPlayerPanel extends LinearLayout implements View
     public void startNarrowAnim() {
         AnimatorSet animatorSet = new AnimatorSet();
         animatorSet.playTogether(
-                ObjectAnimator.ofFloat(this.playerViewPropertyManager, "width", this.originalWidth, this.narrowedWidth),
-                ObjectAnimator.ofFloat(this.playerViewPropertyManager, "height", this.originalHeight, this.narrowedHeight)
+                ObjectAnimator.ofFloat(this.playerViewPropertyManager, "width", this.enlargedWidth, this.narrowedWidth),
+                ObjectAnimator.ofFloat(this.playerViewPropertyManager, "height", this.enlargedHeight, this.narrowedHeight)
         );
         animatorSet.addListener(new AnimatorListenerAdapter() {
+
             @Override
-            public void onAnimationEnd(Animator animation) {
+            public void onAnimationStart(Animator animation) {
                 mediaPlayerPanelHeader.setVisibility(View.GONE);
                 mediaPlayerPanelController.setVisibility(View.GONE);
+            }
+
+            @Override
+            public void onAnimationEnd(Animator animation) {
                 isEnlarged = false;
             }
         });
@@ -198,10 +269,56 @@ public class FloatingWindowMediaPlayerPanel extends LinearLayout implements View
         animatorSet.start();
     }
 
+    public void showPlayBtn(boolean isPlaying) {
+        if (isPlaying) {
+            this.pauseBtn.setVisibility(VISIBLE);
+            this.playBtn.setVisibility(GONE);
+        } else {
+            this.pauseBtn.setVisibility(GONE);
+            this.playBtn.setVisibility(VISIBLE);
+        }
+    }
+
+    public void blockPlayAndPause(boolean isBlocked) {
+        if (isBlocked) {
+            this.pauseBtn.setEnabled(false);
+            this.playBtn.setEnabled(false);
+        } else {
+            this.pauseBtn.setEnabled(true);
+            this.playBtn.setEnabled(true);
+        }
+    }
+
+    public void showShuffleBtn(boolean isShuffleMode) {
+        if (isShuffleMode) {
+            this.sequenceBtn.setVisibility(VISIBLE);
+            this.shuffleBtn.setVisibility(GONE);
+        } else {
+            this.sequenceBtn.setVisibility(GONE);
+            this.shuffleBtn.setVisibility(VISIBLE);
+        }
+    }
+
+    public void showRepeatBtn(boolean isRepeatMode) {
+        if (isRepeatMode) {
+            this.loopAllBtn.setVisibility(VISIBLE);
+            this.repeatOneBtn.setVisibility(GONE);
+        } else {
+            this.loopAllBtn.setVisibility(GONE);
+            this.repeatOneBtn.setVisibility(VISIBLE);
+        }
+    }
+
     private void init(Context context) {
         this.context = context;
         this.windowManager = (WindowManager) this.context.getSystemService(WINDOW_SERVICE);
         this.touchHelper = new TouchHelper();
+        this.prefsManager = PrefsManager.getInstance(this.getContext());
+        this.refreshPanelColor();
+    }
+
+    private void refreshPanelColor() {
+        this.mediaPanelColor = ColorPalette.getColorSuite(this.context, this.prefsManager.acquirePrimaryColor())[1];
     }
 
     /**
@@ -226,18 +343,16 @@ public class FloatingWindowMediaPlayerPanel extends LinearLayout implements View
                 case MotionEvent.ACTION_MOVE:
                     logUtil.i("ACTION_MOVE");
 
-                    if (!isEnlarged()) {
-                        if (Math.abs(motionEvent.getRawX() - pressedX) > CLICK_ACTION_THRESHOLD || Math.abs(motionEvent.getRawY() - pressedY) > CLICK_ACTION_THRESHOLD) {
-                            updatedParameters.x = (int) (x + (motionEvent.getRawX() - pressedX));
-                            updatedParameters.y = (int) (y + (motionEvent.getRawY() - pressedY));
+                    if (Math.abs(motionEvent.getRawX() - pressedX) > CLICK_ACTION_THRESHOLD || Math.abs(motionEvent.getRawY() - pressedY) > CLICK_ACTION_THRESHOLD) {
+                        updatedParameters.x = (int) (x + (motionEvent.getRawX() - pressedX));
+                        updatedParameters.y = (int) (y + (motionEvent.getRawY() - pressedY));
 
-                            logUtil.i("updated x: " + Math.abs(updatedParameters.x));
-                            logUtil.i("updated y: " + Math.abs(updatedParameters.y));
+                        logUtil.i("updated x: " + Math.abs(updatedParameters.x));
+                        logUtil.i("updated y: " + Math.abs(updatedParameters.y));
 
-                            windowManager.updateViewLayout(FloatingWindowMediaPlayerPanel.this, updatedParameters);
+                        windowManager.updateViewLayout(FloatingWindowMediaPlayerPanel.this, updatedParameters);
 
-                            isClicked = false;
-                        }
+                        isClicked = false;
                     }
                     break;
 
@@ -262,19 +377,20 @@ public class FloatingWindowMediaPlayerPanel extends LinearLayout implements View
         }
 
         void setWidth(float width) {
-            if (width == originalWidth) {
-                this.playerViewParams.width = MATCH_PARENT;
-                this.playerViewParams.setMargins(0, 0, 0, 0);
-            } else {
-                this.playerViewParams.width = (int) width;
-            }
+//            if (width == originalWidth) {
+//                this.playerViewParams.width = MATCH_PARENT;
+//                this.playerViewParams.setMargins(0, 0, 0, 0);
+//            } else {
+//                this.playerViewParams.width = (int) width;
+//            }
 
+            this.playerViewParams.width = (int) width;
             mediaPlayerPanelParent.setLayoutParams(this.playerViewParams);
         }
 
         int getWidth() {
             logUtil.i("getWidth: " + this.playerViewParams.width);
-            return this.playerViewParams.width < 0 ? originalWidth : this.playerViewParams.width;
+            return this.playerViewParams.width < 0 ? enlargedWidth : this.playerViewParams.width;
         }
 
         void setHeight(float height) {
@@ -284,15 +400,29 @@ public class FloatingWindowMediaPlayerPanel extends LinearLayout implements View
 
         int getHeight() {
             logUtil.i("getHeight: " + this.playerViewParams.height);
-            return this.playerViewParams.height < 0 ? originalHeight : this.playerViewParams.height;
+            return this.playerViewParams.height < 0 ? enlargedWidth : this.playerViewParams.height;
         }
     }
 
     public interface PlayCallback {
-        void close();
+        void onScale();
+
+        void onClose();
+
+        void onShuffle();
+
+        void onSequence();
 
         void playPrev();
 
+        void play();
+
+        void pause();
+
         void playNext();
+
+        void onRepeatOne();
+
+        void onLoopAll();
     }
 }

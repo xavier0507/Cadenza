@@ -63,8 +63,9 @@ public class MediaPlayerPanelFragment extends BaseFragment implements MediaPlaye
     private int currentPlayTime;
     private boolean isBackground;
     private boolean isTouched;
-    private boolean isShowRepeatOne = true;
-    private boolean isShowShuffle = true;
+
+    private boolean isShuffleMode = false;
+    private boolean isRepeatOneMode = false;
 
     @Override
     protected int layoutResourceId() {
@@ -250,19 +251,19 @@ public class MediaPlayerPanelFragment extends BaseFragment implements MediaPlaye
                 break;
 
             case R.id.media_player_panel_btn_shuffle:
-                this.setShowShuffleStatus(false);
+                this.setShowShuffleStatus(true);
                 this.showShuffleStatus();
-                Toast.makeText(this.getActivity(), "開啟隨機播放", Toast.LENGTH_LONG).show();
+                Toast.makeText(this.getActivity(), "隨機播放開啟", Toast.LENGTH_LONG).show();
                 break;
 
             case R.id.media_player_panel_btn_shuffle_close:
-                this.setShowShuffleStatus(true);
+                this.setShowShuffleStatus(false);
                 this.showShuffleStatus();
-                Toast.makeText(this.getActivity(), "關閉隨機播放", Toast.LENGTH_LONG).show();
+                Toast.makeText(this.getActivity(), "循序播放開啟", Toast.LENGTH_LONG).show();
                 break;
 
             case R.id.media_player_panel_btn_prev:
-                if (!this.isShowShuffle) {
+                if (this.isShuffleMode) {
                     if (player != null) {
                         Random random = new Random();
                         int randomPlayIndex = random.nextInt(playlistManager.getItemListSize());
@@ -307,7 +308,7 @@ public class MediaPlayerPanelFragment extends BaseFragment implements MediaPlaye
                 break;
 
             case R.id.media_player_panel_btn_next:
-                if (!this.isShowShuffle) {
+                if (this.isShuffleMode) {
                     if (player != null) {
                         Random random = new Random();
                         int randomPlayIndex = random.nextInt(playlistManager.getItemListSize());
@@ -332,15 +333,15 @@ public class MediaPlayerPanelFragment extends BaseFragment implements MediaPlaye
                 break;
 
             case R.id.media_player_panel_btn_repeat_one:
-                this.setShowRepeatOneStatus(false);
+                this.setShowRepeatOneStatus(true);
                 this.showRepeatOneStatus();
-                Toast.makeText(this.getActivity(), "開啟單曲播放", Toast.LENGTH_LONG).show();
+                Toast.makeText(this.getActivity(), "單曲模式", Toast.LENGTH_LONG).show();
                 break;
 
             case R.id.media_player_panel_btn_recycle:
-                this.setShowRepeatOneStatus(true);
+                this.setShowRepeatOneStatus(false);
                 this.showRepeatOneStatus();
-                Toast.makeText(this.getActivity(), "開啟循環播放", Toast.LENGTH_LONG).show();
+                Toast.makeText(this.getActivity(), "全曲循環模式", Toast.LENGTH_LONG).show();
                 break;
         }
     }
@@ -355,8 +356,8 @@ public class MediaPlayerPanelFragment extends BaseFragment implements MediaPlaye
     }
 
     private void checkStatus() {
-        this.isShowRepeatOne = this.prefsManager.acquireIsRepeatOneStatus();
-        this.isShowShuffle = this.prefsManager.acquireIsShuffleStatus();
+        this.isShuffleMode = this.prefsManager.acquireIsShuffleStatus();
+        this.isRepeatOneMode = this.prefsManager.acquireIsRepeatOneStatus();
     }
 
     private void initYoutube() {
@@ -431,37 +432,38 @@ public class MediaPlayerPanelFragment extends BaseFragment implements MediaPlaye
             this.pauseButton.setVisibility(View.GONE);
         }
     }
+
     private void setMediaPlayerPanelCallBack() {
         this.mediaPlayerPanel.setPlayerCallback(this);
     }
 
     private void setShowRepeatOneStatus(boolean isShowRepeatOne) {
         this.prefsManager.putIsRepeatOneStatus(isShowRepeatOne);
-        this.isShowRepeatOne = this.prefsManager.acquireIsRepeatOneStatus();
+        this.isRepeatOneMode = this.prefsManager.acquireIsRepeatOneStatus();
     }
 
     private void showRepeatOneStatus() {
-        if (this.isShowRepeatOne) {
-            this.repeatOneButton.setVisibility(View.VISIBLE);
-            this.recycleButton.setVisibility(View.GONE);
-        } else {
+        if (this.isRepeatOneMode) {
             this.repeatOneButton.setVisibility(View.GONE);
             this.recycleButton.setVisibility(View.VISIBLE);
+        } else {
+            this.repeatOneButton.setVisibility(View.VISIBLE);
+            this.recycleButton.setVisibility(View.GONE);
         }
     }
 
     private void setShowShuffleStatus(boolean isShowShuffle) {
         this.prefsManager.putIsShuffleStatus(isShowShuffle);
-        this.isShowShuffle = this.prefsManager.acquireIsShuffleStatus();
+        this.isShuffleMode = this.prefsManager.acquireIsShuffleStatus();
     }
 
     private void showShuffleStatus() {
-        if (this.isShowShuffle) {
-            this.shuffleButton.setVisibility(View.VISIBLE);
-            this.shuffleCloseButton.setVisibility(View.GONE);
-        } else {
+        if (this.isShuffleMode) {
             this.shuffleButton.setVisibility(View.GONE);
             this.shuffleCloseButton.setVisibility(View.VISIBLE);
+        } else {
+            this.shuffleButton.setVisibility(View.VISIBLE);
+            this.shuffleCloseButton.setVisibility(View.GONE);
         }
     }
 
@@ -578,8 +580,16 @@ public class MediaPlayerPanelFragment extends BaseFragment implements MediaPlaye
         public void onVideoEnded() {
             logUtil.i("State onVideoEnded!");
 
-            if (!isShowShuffle) {
-                if (isShowRepeatOne) {
+            if (isShuffleMode) {
+                if (isRepeatOneMode) {
+                    if (player != null) {
+                        videoId = playlistManager.getCurrentItem().getContentDetails().getVideoId();
+                        player.loadVideo(videoId);
+                        player.play();
+
+                        showCurrentVideoTitle();
+                    }
+                } else {
                     if (player != null) {
                         Random random = new Random();
                         int randomPlayIndex = random.nextInt(playlistManager.getItemListSize());
@@ -590,19 +600,11 @@ public class MediaPlayerPanelFragment extends BaseFragment implements MediaPlaye
 
                         showCurrentVideoTitle();
                     }
-                } else {
-                    if (player != null) {
-                        videoId = playlistManager.getCurrentItem().getContentDetails().getVideoId();
-                        player.loadVideo(videoId);
-                        player.play();
-
-                        showCurrentVideoTitle();
-                    }
                 }
             } else {
-                if (isShowRepeatOne) {
+                if (isRepeatOneMode) {
                     if (player != null) {
-                        videoId = playlistManager.nextItem();
+                        videoId = playlistManager.getCurrentItem().getContentDetails().getVideoId();
                         player.loadVideo(videoId);
                         player.play();
 
@@ -610,7 +612,7 @@ public class MediaPlayerPanelFragment extends BaseFragment implements MediaPlaye
                     }
                 } else {
                     if (player != null) {
-                        videoId = playlistManager.getCurrentItem().getContentDetails().getVideoId();
+                        videoId = playlistManager.nextItem();
                         player.loadVideo(videoId);
                         player.play();
 

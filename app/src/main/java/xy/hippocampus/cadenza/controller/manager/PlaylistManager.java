@@ -3,6 +3,7 @@ package xy.hippocampus.cadenza.controller.manager;
 import com.google.api.services.youtube.model.PlaylistItem;
 
 import java.util.List;
+import java.util.Random;
 
 import xy.hippocampus.cadenza.util.LogUtil;
 
@@ -59,6 +60,26 @@ public class PlaylistManager {
         }
 
         logUtil.i("PlaylistManager::nextItem() - currentPlayingItemIndex: " + currentPlayingItemIndex);
+
+        return itemList.get(currentPlayingItemIndex).getContentDetails().getVideoId();
+    }
+
+    public String shuffleItem() {
+        if (this.isItemListEmpty()) {
+            throw new NullPointerException("請檢查播放列表是否為空。");
+        }
+
+        Random random = new Random();
+        int randomPlayIndex = random.nextInt(this.getItemListSize());
+        this.setCurrentPlayingItemIndex(randomPlayIndex);
+
+        return itemList.get(currentPlayingItemIndex).getContentDetails().getVideoId();
+    }
+
+    public String repeatItem() {
+        if (this.isItemListEmpty()) {
+            throw new NullPointerException("請檢查播放列表是否為空。");
+        }
 
         return itemList.get(currentPlayingItemIndex).getContentDetails().getVideoId();
     }

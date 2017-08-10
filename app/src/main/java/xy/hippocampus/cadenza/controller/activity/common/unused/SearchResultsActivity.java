@@ -1,4 +1,4 @@
-package xy.hippocampus.cadenza.controller.activity.common;
+package xy.hippocampus.cadenza.controller.activity.common.unused;
 
 import android.app.SearchManager;
 import android.content.Intent;
@@ -10,7 +10,7 @@ import xy.hippocampus.cadenza.controller.activity.common.base.BaseAppBarActivity
 /**
  * Created by Xavier Yin on 5/31/17.
  */
-
+@Deprecated
 public class SearchResultsActivity extends BaseAppBarActivity {
     private TextView searchResultsText;
 

@@ -17,7 +17,7 @@
         android:theme="@style/AppTheme">
 
         <activity
-            android:name=".controller.activity.common.SplashActivity"
+            android:name=".controller.activity.common.mode.SplashActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@style/AppThemeForFullScreen">
@@ -30,14 +30,14 @@
         </activity>
 
         <activity
-            android:name=".controller.activity.common.HomeActivity"
+            android:name=".controller.activity.common.mode.slanting.HomeActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
 
         <service android:name=".controller.service.sample.FloatingWindowService" />
 
         <activity
-            android:name=".controller.activity.common.SearchResultsActivity"
+            android:name=".controller.activity.common.unused.SearchResultsActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme">

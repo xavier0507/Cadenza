@@ -1,4 +1,4 @@
-package xy.hippocampus.cadenza.controller.activity.common;
+package xy.hippocampus.cadenza.controller.activity.common.unused;
 
 import android.app.ProgressDialog;
 
@@ -8,7 +8,7 @@ import xy.hippocampus.cadenza.controller.activity.common.base.BaseAppBarViewPage
 /**
  * Created by Xavier Yin on 5/28/17.
  */
-
+@Deprecated
 public class MainViewPagerActivity extends BaseAppBarViewPagerActivity {
     private ProgressDialog progressDialog;
 
@@ -40,7 +40,7 @@ public class MainViewPagerActivity extends BaseAppBarViewPagerActivity {
 
     @Override
     protected int layoutResourceId() {
-        return R.layout.activity_main;
+        return R.layout.activity_home;
     }
 
     @Override

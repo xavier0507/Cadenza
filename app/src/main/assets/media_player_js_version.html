@@ -1,47 +1,105 @@
 <!DOCTYPE html>
 <html>
 <heade>
-    <meta content="origin" name="referrer">
+    <!--<style type="text/css">-->
+    <!--div {-->
+    <!--.video-container {-->
+    <!--position: relative;-->
+    <!--padding-bottom: 56.25%;-->
+    <!--padding-top: 30px;-->
+    <!--height: 0;-->
+    <!--overflow: hidden;-->
+    <!--}-->
+    <!--}-->
 
-    <style type="text/css">
-        div {
-            .video-container {
-                position: relative;
-                padding-bottom: 56.25%;
-                padding-top: 30px;
+    <!--.video-container iframe,-->
+    <!--.video-container object,-->
+    <!--.video-container embed {-->
+    <!--position: absolute;-->
+    <!--top: 0;-->
+    <!--left: 0;-->
+    <!--width: 100%;-->
+    <!--height: 100%;-->
+    <!--}-->
+    <!--</style>-->
+
+    <meta content="origin" name="referrer">
+    <meta name="viewport" content="height=device-height, initial-scale=1, user-scalable=no"/>
+    <style>
+            body {
+                margin : 0;
+                padding : 0;
+                text-align: center;
+                background: black;
+            }
+            #outer {
+                display: table;
+                position: absolute;
+                height: 100%;
+                width: 100%;
+            }
+            #middle {
+                display: table-cell;
+                vertical-align: middle;
+            }
+            #player {
+                border:0px;
+                margin-left: auto;
+                margin-right: auto;
+                padding:0;
+                display:table-cell;
+            }
+            .js-video {
                 height: 0;
+                padding-top: 25px;
+                padding-bottom: 67.5%;
+                position: relative;
                 overflow: hidden;
             }
-        }
-
-        .video-container iframe,
-        .video-container object,
-        .video-container embed {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-        }
+            .js-video.widescreen {
+                padding-bottom: 56.25%;
+            }
+            .js-video.vimeo {
+                padding-top: 0;
+            }
+            .js-video embed, .js-video iframe, .js-video object, .js-video video {
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                position: absolute;
+            }
     </style>
 </heade>
 
 <body>
-    <div class="video-container">
-        <iframe id="existing-iframe-example" width="100%" height="100%" src="https://www.youtube.com/embed/$VIDEO_ID$ + ?rel=0&enablejsapi=1&showinfo=0&controls=2" frameborder="0"></iframe>
+    <!--<div class="video-container">-->
+        <!--<iframe id="player"-->
+                <!--width="100%" height="100%"-->
+                <!--src="https://www.youtube.com/embed/kejYHuAcG_k?rel=0&enablejsapi=1&autoplay=0&showinfo=0&controls=1"-->
+                <!--frameborder="0">-->
+        <!--</iframe>-->
+    <!--</div>-->
+
+    <div id="outer">
+        <div id="middle" class="js-video widescreen vimeo">
+            <div id="player"></div>
+        </div>
     </div>
 
-    <script type="text/javascript">
+    <script>
         var playVideoId;
-        function init(id) {
-            playVideoId = id
-            Android.showCurrentPlayId(playVideoId);
+        var playListId;
+        function init(videoId, listId) {
+            playVideoId = videoId
+            playListId = listId
+            Android.showCurrentPlayId(playVideoId, playListId);
             launchYoutube();
         }
 
         function launchYoutube() {
             var tag = document.createElement('script');
-            tag.id = 'iframe-demo';
+            tag.id = 'media_player_js_version';
             tag.src = 'https://www.youtube.com/iframe_api';
             var firstScriptTag = document.getElementsByTagName('script')[0];
             firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
@@ -49,17 +107,16 @@
 
         var player;
         function onYouTubeIframeAPIReady() {
-            player = new YT.Player('existing-iframe-example', {
-                height: '100%',
-                width: '100%',
-                html5: 0,
+            player = new YT.Player('player', {
+                videoId: playVideoId,
                 playerVars: {
                     'enablejsapi': 1,
                     'showinfo': 0,
                     'rel': 0,
                     'loop': 0,
-                    'autoplay': 1,
-                    'controls': 1
+                    'autoplay': 0,
+                    'controls': 0,
+                    'fs': 1
                 },
                 events: {
                     'onReady': onPlayerReady,
@@ -70,7 +127,7 @@
         }
 
         function onPlayerReady(event) {
-            player.cueVideoById(playVideoId);
+            <!--player.cueVideoById(playVideoId);-->
             player.playVideo();
             player.unMute();
         }
@@ -82,24 +139,21 @@
         function checkoutCurrentStatus(playerStatus) {
             var status;
             if (playerStatus == -1) {
-                status = "0009"; // unstarted
+                status = "-1"; // unstarted
             } else if (playerStatus == 0) {
-                status = "0010"; // ended
+                status = "10"; // ended
             } else if (playerStatus == 1) {
-                status = "0011"; // playing
+                status = "11"; // playing
+                passDuration(player.getDuration());
             } else if (playerStatus == 2) {
-                status = "0012"; // paused
+                status = "12"; // paused
             } else if (playerStatus == 3) {
-                status = "0013"; // buffering
+                status = "13"; // buffering
             } else if (playerStatus == 5) {
-                status = "0015"; // video cued
+                status = "15"; // video cued
             }
 
             passCurrentPlayerStatus(status);
-        }
-
-        function passCurrentPlayerStatus(status) {
-            Android.showCurrentPlayerStatus(status);
         }
 
         function onPlayerError(event) {
@@ -108,27 +162,47 @@
 
         function checkoutError(errorStatus) {
             <!--var status;-->
-            <!--if (errorStatus == 2) {-->
-                <!--status = "invalid parameter value";-->
-            <!--} else if (errorStatus == 5) {-->
-                <!--status = "cannot be played in an HTML5 player";-->
-            <!--} else if (errorStatus == 100) {-->
-                <!--status = "The video requested was not found.";-->
-            <!--} else if (errorStatus == 101) {-->
-                <!--status = "not allow it to be played in embedded players.";-->
-            <!--} else if (errorStatus == 150) {-->
-                <!--status = "the same as 101";-->
-            <!--}-->
+            <!-- errorStatus == 2 // "Invalid parameter value" -->
+            <!-- errorStatus == 5 // "Cannot be played in an HTML5 player" -->
+            <!-- errorStatus == 100 // "The video requested was not found" -->
+            <!-- errorStatus == 101 // "Not allow it to be played in embedded players" -->
+            <!-- errorStatus == 150 // "The same as 101" -->
 
             passError(errorStatus);
+        }
+
+        function playJSPlayerVideo() {
+            player.playVideo();
+        }
+
+        function pauseJSPlayerVideo() {
+            player.pauseVideo();
+        }
+
+        function stopJSPlayerVideo() {
+            player.stopVideo();
+        }
+
+        function seekToJSPlayerVideo(sec) {
+            player.pauseVideo();
+            player.seekTo(sec, true);
+            player.playVideo();
         }
 
         function passError(error) {
             Android.showError(error);
         }
 
-        function closePlayer() {
-            player.stopVideo();
+        function passCurrentPlayerStatus(status) {
+            Android.showCurrentPlayerStatus(status);
+        }
+
+        function passDuration(duration) {
+            Android.showDuration(duration);
+        }
+
+        function passPlayerCurrentTime() {
+            Android.showCurrentTime(player.getCurrentTime(), player.getDuration());
         }
     </script>
 </body>
