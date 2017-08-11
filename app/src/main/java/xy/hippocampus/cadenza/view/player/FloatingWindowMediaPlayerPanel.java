@@ -71,6 +71,7 @@ public class FloatingWindowMediaPlayerPanel extends LinearLayout implements View
     private boolean isFirstMeasure = true;
     private boolean isEnlarged;
     private boolean isClicked;
+    private int primaryAlphaColor;
 
     public FloatingWindowMediaPlayerPanel(Context context) {
         this(context, null);
@@ -126,6 +127,7 @@ public class FloatingWindowMediaPlayerPanel extends LinearLayout implements View
         this.loopAllBtn.setOnClickListener(this);
 
         this.playerViewPropertyManager = new PlayerViewPropertyManager();
+        this.updateThemeColor();
     }
 
     @Override
@@ -242,7 +244,7 @@ public class FloatingWindowMediaPlayerPanel extends LinearLayout implements View
                 isEnlarged = true;
             }
         });
-        animatorSet.setDuration(200);
+        animatorSet.setDuration(400);
         animatorSet.start();
     }
 
@@ -265,7 +267,7 @@ public class FloatingWindowMediaPlayerPanel extends LinearLayout implements View
                 isEnlarged = false;
             }
         });
-        animatorSet.setDuration(200);
+        animatorSet.setDuration(400);
         animatorSet.start();
     }
 
@@ -309,16 +311,17 @@ public class FloatingWindowMediaPlayerPanel extends LinearLayout implements View
         }
     }
 
+    public void updateThemeColor() {
+        this.primaryAlphaColor = ColorPalette.getColorSuite(this.context, this.prefsManager.acquirePrimaryColor())[1];
+        this.mediaPlayerPanelHeader.setBackgroundColor(this.primaryAlphaColor);
+        this.mediaPlayerPanelController.setBackgroundColor(this.primaryAlphaColor);
+    }
+
     private void init(Context context) {
         this.context = context;
         this.windowManager = (WindowManager) this.context.getSystemService(WINDOW_SERVICE);
         this.touchHelper = new TouchHelper();
         this.prefsManager = PrefsManager.getInstance(this.getContext());
-        this.refreshPanelColor();
-    }
-
-    private void refreshPanelColor() {
-        this.mediaPanelColor = ColorPalette.getColorSuite(this.context, this.prefsManager.acquirePrimaryColor())[1];
     }
 
     /**

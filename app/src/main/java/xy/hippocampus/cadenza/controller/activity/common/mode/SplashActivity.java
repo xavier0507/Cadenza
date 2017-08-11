@@ -14,7 +14,6 @@ import android.widget.TextView;
 
 import xy.hippocampus.cadenza.R;
 import xy.hippocampus.cadenza.controller.activity.common.base.BaseEPMIActivity;
-import xy.hippocampus.cadenza.controller.activity.common.mode.floating.FloatingModeHomeActivity;
 import xy.hippocampus.cadenza.controller.activity.common.mode.slanting.HomeActivity;
 
 /**

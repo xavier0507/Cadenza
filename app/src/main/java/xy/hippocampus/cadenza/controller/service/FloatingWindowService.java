@@ -1,10 +1,12 @@
-package xy.hippocampus.cadenza.controller.service.sample;
+package xy.hippocampus.cadenza.controller.service;
 
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.PixelFormat;
 import android.os.Handler;
 import android.os.IBinder;
@@ -42,6 +44,7 @@ import xy.hippocampus.cadenza.util.LogUtil;
 import xy.hippocampus.cadenza.view.player.FloatingWindowMediaPlayerPanel;
 
 import static android.widget.ListPopupWindow.WRAP_CONTENT;
+import static xy.hippocampus.cadenza.model.constant.Constants.SERVICE_CHANGE_COLOR;
 
 /**
  * Created by Xavier Yin on 2017/7/31.
@@ -55,6 +58,8 @@ public class FloatingWindowService extends Service implements FloatingWindowMedi
     private static final int MEDIA_PLAYER_STATUS_NEXT = 2;
     private static final int MEDIA_PLAYER_STATUS_SHUFFLE = 3;
     private static final int MEDIA_PLAYER_STATUS_REPEAT = 4;
+
+    private static final int NOTIFICATION_ID = 1;
 
     private PlaylistManager playlistManager;
     private PrefsManager prefsManager;
@@ -80,6 +85,8 @@ public class FloatingWindowService extends Service implements FloatingWindowMedi
     private boolean isShuffleMode;
     private boolean isRepeatOneMode;
     private boolean isSeekBarTouch;
+
+    private ServiceBroadcastReceiver receiver;
 
     @Nullable
     @Override
@@ -165,6 +172,9 @@ public class FloatingWindowService extends Service implements FloatingWindowMedi
 
         this.javaScriptInterface = new JavaScriptInterface(this);
         this.mediaPlayerHandler = new Handler(Looper.getMainLooper());
+
+        this.receiver = new ServiceBroadcastReceiver();
+        this.registerReceiver(this.receiver, new IntentFilter(SERVICE_CHANGE_COLOR));
     }
 
     private void initUI() {
@@ -269,6 +279,7 @@ public class FloatingWindowService extends Service implements FloatingWindowMedi
         this.youtubeWeb.removeCallbacks(this.displayCurrentTimeRunnable);
         this.youtubeWeb.destroy();
         this.windowManager.removeView(this.rootView);
+        this.unregisterReceiver(this.receiver);
         this.stopSelf();
     }
 
@@ -424,9 +435,22 @@ public class FloatingWindowService extends Service implements FloatingWindowMedi
                 youtubeWeb.reload();
 
                 String index = Integer.toString(playlistManager.getCurrentIndex() + 1);
-                mediaInfoText.setText("曲目: " + index + " - " + playlistManager.getCurrentItem().getSnippet().getTitle());
+                String videoInfo = "曲目: " + index + " - " + playlistManager.getCurrentItem().getSnippet().getTitle();
+                mediaInfoText.setText(videoInfo);
+
+                updateNotification(videoInfo);
 
                 rootView.blockPlayAndPause(true);
+            }
+        });
+    }
+
+    private void updateThemeColor() {
+        this.mediaPlayerHandler.post(new Runnable() {
+
+            @Override
+            public void run() {
+                rootView.updateThemeColor();
             }
         });
     }
@@ -460,7 +484,7 @@ public class FloatingWindowService extends Service implements FloatingWindowMedi
 
         NotificationCompat.Builder nfBuilder = new NotificationCompat.Builder(this);
         nfBuilder.setSmallIcon(R.drawable.ic_clef_note);
-        nfBuilder.setContentTitle("Cadenza");
+        nfBuilder.setContentTitle("Cadenza - 目前聆賞的曲目");
         nfBuilder.setContentText(sb.toString());
 
         Intent resultIntent = new Intent(this, SplashActivity.class);
@@ -471,8 +495,17 @@ public class FloatingWindowService extends Service implements FloatingWindowMedi
         PendingIntent resultPendingIntent = stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
         nfBuilder.setContentIntent(resultPendingIntent);
         NotificationManager mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-        mNotificationManager.notify(1, nfBuilder.build());
-        startForeground(1, nfBuilder.build());
+        mNotificationManager.notify(NOTIFICATION_ID, nfBuilder.build());
+        startForeground(NOTIFICATION_ID, nfBuilder.build());
+    }
+
+    private void updateNotification(String videoInfo) {
+        NotificationManager nfManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        NotificationCompat.Builder nfBuilder = (NotificationCompat.Builder) new NotificationCompat.Builder(this)
+                .setContentTitle("Cadenza - 目前聆賞的曲目")
+                .setContentText(videoInfo)
+                .setSmallIcon(R.drawable.ic_clef_note);
+        nfManager.notify( NOTIFICATION_ID, nfBuilder.build());
     }
 
     /**
@@ -636,4 +669,14 @@ public class FloatingWindowService extends Service implements FloatingWindowMedi
             executeVideoSeekTo((int) playedLength);
         }
     };
+
+    public class ServiceBroadcastReceiver extends BroadcastReceiver {
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if (intent.getAction().equals(SERVICE_CHANGE_COLOR)) {
+                updateThemeColor();
+            }
+        }
+    }
 }

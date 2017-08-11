@@ -31,7 +31,7 @@ import xy.hippocampus.cadenza.controller.fragment.base.BaseFragment;
 import xy.hippocampus.cadenza.controller.manager.FragmentStackManager;
 import xy.hippocampus.cadenza.controller.manager.GoogleAccountManager;
 import xy.hippocampus.cadenza.controller.manager.PlaylistManager;
-import xy.hippocampus.cadenza.controller.service.sample.FloatingWindowService;
+import xy.hippocampus.cadenza.controller.service.FloatingWindowService;
 import xy.hippocampus.cadenza.controller.ytapi.base.IAsyncTaskActCallback;
 import xy.hippocampus.cadenza.controller.ytapi.playlist.facade.PlaylistApi;
 import xy.hippocampus.cadenza.model.bean.MainListItemInfo;

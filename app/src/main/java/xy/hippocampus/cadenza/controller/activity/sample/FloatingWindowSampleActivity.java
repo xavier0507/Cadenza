@@ -6,7 +6,7 @@ import android.widget.Button;
 
 import xy.hippocampus.cadenza.R;
 import xy.hippocampus.cadenza.controller.activity.common.base.BaseActivity;
-import xy.hippocampus.cadenza.controller.service.sample.FloatingWindowService;
+import xy.hippocampus.cadenza.controller.service.FloatingWindowService;
 
 /**
  * Created by Xavier Yin on 2017/7/31.
