@@ -34,7 +34,7 @@
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
 
-        <service android:name=".controller.service.sample.FloatingWindowService" />
+        <service android:name=".controller.service.FloatingWindowService" />
 
         <activity
             android:name=".controller.activity.common.unused.SearchResultsActivity"

@@ -35,6 +35,7 @@ import xy.hippocampus.cadenza.view.theme.ColorSettings;
 import static xy.hippocampus.cadenza.model.constant.Constants.FRAG_ABOUT_TAG;
 import static xy.hippocampus.cadenza.model.constant.Constants.FRAG_MAIN_LIST_TAG;
 import static xy.hippocampus.cadenza.model.constant.Constants.FRAG_PLAYLIST_TAG;
+import static xy.hippocampus.cadenza.model.constant.Constants.SERVICE_CHANGE_COLOR;
 import static xy.hippocampus.cadenza.model.constant.IntentExtra.INTENT_EXTRA_COMPOSER_INFO;
 
 /**
@@ -73,6 +74,7 @@ public class MainListFragment extends BaseFragment implements IOnClickedListener
                     public void onColorSelected(int color) {
                         PrefsManager.getInstance(getActivity()).putPrimaryColor(color);
                         HomeActivity.updateAllTheme();
+                        notifyService();
                     }
                 });
                 break;
@@ -184,6 +186,12 @@ public class MainListFragment extends BaseFragment implements IOnClickedListener
 
             this.getProgressCallback().notifyProgressDisappear();
         }
+    }
+
+    private void notifyService() {
+        Intent intent = new Intent();
+        intent.setAction(SERVICE_CHANGE_COLOR);
+        this.getActivity().sendBroadcast(intent);
     }
 
     public static MainListFragment newInstance() {
