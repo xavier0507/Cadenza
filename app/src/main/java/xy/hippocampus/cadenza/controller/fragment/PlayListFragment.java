@@ -57,8 +57,6 @@ public class PlayListFragment extends BaseFragment implements
     private static final float PERCENTAGE_TO_HIDE_TITLE_DETAILS = 0.3f;
     private static final int ALPHA_ANIMATIONS_DURATION = 200;
 
-    private PlaylistManager playlistManager = PlaylistManager.getInstance();
-
     private boolean isTheTitleVisible;
     private boolean isTheTitleContainerVisible = true;
 
@@ -83,6 +81,7 @@ public class PlayListFragment extends BaseFragment implements
 
     private MainListItemInfo mainListItemInfo;
     private PlaylistApi playlistApi;
+    private PlaylistManager playlistManager = PlaylistManager.getInstance();
 
     private List<PlaylistItem> currentPlaylistItems;
 
@@ -108,6 +107,7 @@ public class PlayListFragment extends BaseFragment implements
         if (this.getArguments() != null) {
             this.logUtil.i("acquireComposerInfo");
             this.mainListItemInfo = (MainListItemInfo) this.getArguments().getSerializable(INTENT_EXTRA_COMPOSER_INFO);
+            this.playlistManager.setCurrentComposer(this.mainListItemInfo.getSubTitle());
         }
 
         this.playlistApi = PlaylistApi.getInstance(this.getActivity(), GoogleAccountManager.getInstance(this.getActivity()).getCredential());

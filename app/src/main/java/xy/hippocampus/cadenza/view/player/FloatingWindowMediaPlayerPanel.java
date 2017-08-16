@@ -55,7 +55,6 @@ public class FloatingWindowMediaPlayerPanel extends LinearLayout implements View
     private ImageButton repeatOneBtn;
     private ImageButton loopAllBtn;
 
-    private int mediaPanelColor;
     private int originalWidth;
     private int originalHeight;
     private int enlargedWidth;
@@ -112,9 +111,6 @@ public class FloatingWindowMediaPlayerPanel extends LinearLayout implements View
         this.repeatOneBtn = (ImageButton) this.findViewById(R.id.media_player_panel_btn_repeat_one);
         this.loopAllBtn = (ImageButton) this.findViewById(R.id.media_player_panel_btn_loop_all);
 
-        this.mediaPlayerPanelHeader.setBackgroundColor(this.mediaPanelColor);
-        this.mediaPlayerPanelController.setBackgroundColor(this.mediaPanelColor);
-
         this.scaleBtn.setOnClickListener(this);
         this.closeBtn.setOnClickListener(this);
         this.shuffleBtn.setOnClickListener(this);
@@ -149,10 +145,6 @@ public class FloatingWindowMediaPlayerPanel extends LinearLayout implements View
             int mediaPlayerPanelHeaderHeight = this.mediaPlayerPanelHeader.getMeasuredHeight();
             int mediaPlayerPanelHeight = this.mediaPlayerPanel.getMeasuredHeight();
             int mediaPlayerPanelControllerHeight = this.mediaPlayerPanelController.getMeasuredHeight();
-
-            this.logUtil.i("mediaPlayerPanelHeader height: " + mediaPlayerPanelHeaderHeight);
-            this.logUtil.i("mediaPlayerPanel height: " + mediaPlayerPanelHeight);
-            this.logUtil.i("mediaPlayerPanelController height: " + mediaPlayerPanelControllerHeight);
 
             this.enlargedWidth = this.originalWidth;
             this.enlargedHeight = this.originalHeight + mediaPlayerPanelHeaderHeight + mediaPlayerPanelHeight + mediaPlayerPanelControllerHeight;
@@ -244,7 +236,7 @@ public class FloatingWindowMediaPlayerPanel extends LinearLayout implements View
                 isEnlarged = true;
             }
         });
-        animatorSet.setDuration(400);
+        animatorSet.setDuration(250);
         animatorSet.start();
     }
 
@@ -267,7 +259,7 @@ public class FloatingWindowMediaPlayerPanel extends LinearLayout implements View
                 isEnlarged = false;
             }
         });
-        animatorSet.setDuration(400);
+        animatorSet.setDuration(250);
         animatorSet.start();
     }
 
@@ -278,16 +270,6 @@ public class FloatingWindowMediaPlayerPanel extends LinearLayout implements View
         } else {
             this.pauseBtn.setVisibility(GONE);
             this.playBtn.setVisibility(VISIBLE);
-        }
-    }
-
-    public void blockPlayAndPause(boolean isBlocked) {
-        if (isBlocked) {
-            this.pauseBtn.setEnabled(false);
-            this.playBtn.setEnabled(false);
-        } else {
-            this.pauseBtn.setEnabled(true);
-            this.playBtn.setEnabled(true);
         }
     }
 
@@ -308,6 +290,16 @@ public class FloatingWindowMediaPlayerPanel extends LinearLayout implements View
         } else {
             this.loopAllBtn.setVisibility(GONE);
             this.repeatOneBtn.setVisibility(VISIBLE);
+        }
+    }
+
+    public void blockPlayAndPause(boolean isBlocked) {
+        if (isBlocked) {
+            this.pauseBtn.setEnabled(false);
+            this.playBtn.setEnabled(false);
+        } else {
+            this.pauseBtn.setEnabled(true);
+            this.playBtn.setEnabled(true);
         }
     }
 
@@ -380,19 +372,11 @@ public class FloatingWindowMediaPlayerPanel extends LinearLayout implements View
         }
 
         void setWidth(float width) {
-//            if (width == originalWidth) {
-//                this.playerViewParams.width = MATCH_PARENT;
-//                this.playerViewParams.setMargins(0, 0, 0, 0);
-//            } else {
-//                this.playerViewParams.width = (int) width;
-//            }
-
             this.playerViewParams.width = (int) width;
             mediaPlayerPanelParent.setLayoutParams(this.playerViewParams);
         }
 
         int getWidth() {
-            logUtil.i("getWidth: " + this.playerViewParams.width);
             return this.playerViewParams.width < 0 ? enlargedWidth : this.playerViewParams.width;
         }
 
@@ -402,7 +386,6 @@ public class FloatingWindowMediaPlayerPanel extends LinearLayout implements View
         }
 
         int getHeight() {
-            logUtil.i("getHeight: " + this.playerViewParams.height);
             return this.playerViewParams.height < 0 ? enlargedWidth : this.playerViewParams.height;
         }
     }

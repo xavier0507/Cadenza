@@ -2,6 +2,7 @@ package xy.hippocampus.cadenza.controller.adapter.recycler;
 
 import android.app.Activity;
 import android.graphics.Bitmap;
+import android.os.Handler;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
@@ -52,17 +53,15 @@ public class PlaylistItemRVAdapter extends BaseRVAdapter<PlaylistItem> {
             Picasso.with(playlistItemRVH.thumbnailImageView.getContext())
                     .load(photoUrl)
                     .error(R.drawable.bg_oops)
-                    .networkPolicy(NetworkPolicy.NO_CACHE)
-                    .memoryPolicy(NO_CACHE, NO_STORE)
-                    .resize(180, 120)
+//                    .networkPolicy(NetworkPolicy.NO_STORE)
+//                    .memoryPolicy(NO_CACHE, NO_STORE)
+                    .resize(120, 80)
                     .centerCrop()
                     .into(playlistItemRVH.thumbnailImageView);
         } else {
             Picasso.with(playlistItemRVH.thumbnailImageView.getContext())
                     .load(R.drawable.bg_oops)
-                    .networkPolicy(NetworkPolicy.NO_CACHE)
-                    .memoryPolicy(NO_CACHE, NO_STORE)
-                    .resize(180, 120)
+                    .resize(120, 80)
                     .centerCrop()
                     .into(playlistItemRVH.thumbnailImageView);
         }
@@ -72,6 +71,7 @@ public class PlaylistItemRVAdapter extends BaseRVAdapter<PlaylistItem> {
 
         this.startAnimation(true, playlistItemRVH.playlistItemRoot, position);
         playlistItemRVH.itemView.setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View v) {
                 onClickedListener.onAdapterClicked(playlistItemRVH, playlistItem, position);
