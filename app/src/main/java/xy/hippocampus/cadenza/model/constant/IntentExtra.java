@@ -11,6 +11,7 @@ public class IntentExtra {
 
     public static final String INTENT_EXTRA_COMPOSER_INFO = "intent_extra_composer_info";
 
+    public static final String INTENT_EXTRA_PLAYLIST_ID = "intent_extra_playlist_id";
     public static final String INTENT_EXTRA_PLAYLIST_VIDEO_ID = "intent_extra_playlist_video_id";
     public static final String INTENT_EXTRA_PLAYLIST_TITLE = "intent_extra_playlist_title";
     public static final String INTENT_EXTRA_PLAYLIST_CURRENT_INDEX = "intent_extra_playlist_current_index";

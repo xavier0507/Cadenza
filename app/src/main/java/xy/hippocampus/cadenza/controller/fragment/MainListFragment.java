@@ -10,13 +10,12 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
 
 import java.util.List;
 
 import xy.hippocampus.cadenza.R;
 import xy.hippocampus.cadenza.controller.activity.app.CadenzaApplication;
-import xy.hippocampus.cadenza.controller.activity.common.HomeActivity;
+import xy.hippocampus.cadenza.controller.activity.common.mode.slanting.HomeActivity;
 import xy.hippocampus.cadenza.controller.adapter.base.BaseRVAdapter;
 import xy.hippocampus.cadenza.controller.adapter.base.IOnClickedListener;
 import xy.hippocampus.cadenza.controller.adapter.helper.MainListAdapterSpanSizeLookup;
@@ -36,6 +35,7 @@ import xy.hippocampus.cadenza.view.theme.ColorSettings;
 import static xy.hippocampus.cadenza.model.constant.Constants.FRAG_ABOUT_TAG;
 import static xy.hippocampus.cadenza.model.constant.Constants.FRAG_MAIN_LIST_TAG;
 import static xy.hippocampus.cadenza.model.constant.Constants.FRAG_PLAYLIST_TAG;
+import static xy.hippocampus.cadenza.model.constant.Constants.SERVICE_CHANGE_COLOR;
 import static xy.hippocampus.cadenza.model.constant.IntentExtra.INTENT_EXTRA_COMPOSER_INFO;
 
 /**
@@ -74,6 +74,7 @@ public class MainListFragment extends BaseFragment implements IOnClickedListener
                     public void onColorSelected(int color) {
                         PrefsManager.getInstance(getActivity()).putPrimaryColor(color);
                         HomeActivity.updateAllTheme();
+                        notifyService();
                     }
                 });
                 break;
@@ -185,6 +186,12 @@ public class MainListFragment extends BaseFragment implements IOnClickedListener
 
             this.getProgressCallback().notifyProgressDisappear();
         }
+    }
+
+    private void notifyService() {
+        Intent intent = new Intent();
+        intent.setAction(SERVICE_CHANGE_COLOR);
+        this.getActivity().sendBroadcast(intent);
     }
 
     public static MainListFragment newInstance() {

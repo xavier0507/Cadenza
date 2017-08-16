@@ -25,4 +25,8 @@ public class Constants {
 
     // Data
     public static final String API_KEY = BuildConfig.API_KEY;
+
+    // Broadcast
+    public final static String SERVICE_CHANGE_COLOR = "service_change_color";
+    public final static String SERVICE_CHANGE_INFO = "service_change_info";
 }

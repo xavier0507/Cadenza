@@ -5,6 +5,8 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+    <uses-permission android:name="android.permission.RECEIVE_SMS" />
 
     <application
         android:name=".controller.activity.app.CadenzaApplication"
@@ -16,7 +18,7 @@
         android:theme="@style/AppTheme">
 
         <activity
-            android:name=".controller.activity.common.SplashActivity"
+            android:name=".controller.activity.common.mode.SplashActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@style/AppThemeForFullScreen">
@@ -29,12 +31,12 @@
         </activity>
 
         <activity
-            android:name=".controller.activity.common.HomeActivity"
+            android:name=".controller.activity.common.mode.slanting.HomeActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
 
         <activity
-            android:name=".controller.activity.common.SearchResultsActivity"
+            android:name=".controller.activity.common.unused.SearchResultsActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme">
@@ -51,6 +53,8 @@
                 android:name="android.app.searchable"
                 android:resource="@xml/searchable" />
         </activity>
+
+        <service android:name=".controller.service.FloatingWindowService" />
 
         <meta-data
             android:name="android.app.default_searchable"

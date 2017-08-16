@@ -1,4 +1,4 @@
-package xy.hippocampus.cadenza.controller.activity.common;
+package xy.hippocampus.cadenza.controller.activity.common.mode.slanting;
 
 import android.content.DialogInterface;
 import android.os.Bundle;
@@ -38,6 +38,11 @@ public class HomeActivity extends BaseEPMIActivity implements INotifyProgress {
     }
 
     @Override
+    protected int layoutResourceId() {
+        return R.layout.activity_mode_slanting_home;
+    }
+
+    @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         savedInstanceState = null;
         super.onCreate(savedInstanceState);
@@ -51,11 +56,6 @@ public class HomeActivity extends BaseEPMIActivity implements INotifyProgress {
                     .replace(R.id.frag_home, fragment, FRAG_MAIN_LIST_TAG)
                     .commit();
         }
-    }
-
-    @Override
-    protected int layoutResourceId() {
-        return R.layout.activity_home;
     }
 
     @Override
