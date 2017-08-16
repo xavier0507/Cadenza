@@ -1,7 +1,5 @@
 package xy.hippocampus.cadenza.controller.service;
 
-import android.app.NotificationManager;
-import android.app.PendingIntent;
 import android.app.Service;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -12,8 +10,6 @@ import android.os.Handler;
 import android.os.IBinder;
 import android.os.Looper;
 import android.support.annotation.Nullable;
-import android.support.v4.app.TaskStackBuilder;
-import android.support.v7.app.NotificationCompat;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -36,13 +32,15 @@ import java.util.HashMap;
 import java.util.Map;
 
 import xy.hippocampus.cadenza.R;
-import xy.hippocampus.cadenza.controller.activity.common.mode.SplashActivity;
 import xy.hippocampus.cadenza.controller.manager.PlaylistManager;
 import xy.hippocampus.cadenza.controller.manager.PrefsManager;
+import xy.hippocampus.cadenza.controller.service.helper.NotificationHelper;
 import xy.hippocampus.cadenza.model.constant.IntentExtra;
 import xy.hippocampus.cadenza.util.LogUtil;
 import xy.hippocampus.cadenza.view.player.FloatingWindowMediaPlayerPanel;
 
+import static android.content.Intent.ACTION_SCREEN_OFF;
+import static android.content.Intent.ACTION_SCREEN_ON;
 import static android.widget.ListPopupWindow.WRAP_CONTENT;
 import static xy.hippocampus.cadenza.model.constant.Constants.SERVICE_CHANGE_COLOR;
 
@@ -59,10 +57,9 @@ public class FloatingWindowService extends Service implements FloatingWindowMedi
     private static final int MEDIA_PLAYER_STATUS_SHUFFLE = 3;
     private static final int MEDIA_PLAYER_STATUS_REPEAT = 4;
 
-    private static final int NOTIFICATION_ID = 1;
-
     private PlaylistManager playlistManager;
     private PrefsManager prefsManager;
+    private NotificationHelper notificationHelper;
 
     private WindowManager.LayoutParams parameters;
     private WindowManager windowManager;
@@ -80,13 +77,13 @@ public class FloatingWindowService extends Service implements FloatingWindowMedi
     private int currentPlayerStatus = MEDIA_PLAYER_STATUS_PLAY;
 
     private Handler mediaPlayerHandler;
-    private JavaScriptInterface javaScriptInterface;
+    private JSPlayerInterface JSPlayerInterface;
+    private ServiceBroadcastReceiver receiver;
 
     private boolean isShuffleMode;
     private boolean isRepeatOneMode;
     private boolean isSeekBarTouch;
-
-    private ServiceBroadcastReceiver receiver;
+    private boolean isScreenOff;
 
     @Nullable
     @Override
@@ -96,7 +93,7 @@ public class FloatingWindowService extends Service implements FloatingWindowMedi
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        this.showNotification();
+        this.showNotification(false);
         this.acquireIntentData(intent);
         this.updateVideoId(MEDIA_PLAYER_STATUS_PLAY);
         return START_NOT_STICKY;
@@ -137,12 +134,12 @@ public class FloatingWindowService extends Service implements FloatingWindowMedi
 
     @Override
     public void play() {
-        this.javaScriptInterface.executeJSMediaPlayerPlay();
+        this.JSPlayerInterface.executeJSMediaPlayerPlay();
     }
 
     @Override
     public void pause() {
-        this.javaScriptInterface.executeJSMediaPlayerPause();
+        this.JSPlayerInterface.executeJSMediaPlayerPause();
     }
 
     @Override
@@ -166,15 +163,18 @@ public class FloatingWindowService extends Service implements FloatingWindowMedi
     private void initBasicResources() {
         this.playlistManager = PlaylistManager.getInstance();
         this.prefsManager = PrefsManager.getInstance(this);
+        this.notificationHelper = new NotificationHelper();
 
         this.isShuffleMode = this.prefsManager.acquireIsShuffleStatus();
         this.isRepeatOneMode = this.prefsManager.acquireIsRepeatOneStatus();
 
-        this.javaScriptInterface = new JavaScriptInterface(this);
+        this.JSPlayerInterface = new JSPlayerInterface(this);
         this.mediaPlayerHandler = new Handler(Looper.getMainLooper());
 
         this.receiver = new ServiceBroadcastReceiver();
         this.registerReceiver(this.receiver, new IntentFilter(SERVICE_CHANGE_COLOR));
+        this.registerReceiver(this.receiver, new IntentFilter(ACTION_SCREEN_ON));
+        this.registerReceiver(this.receiver, new IntentFilter(Intent.ACTION_SCREEN_OFF));
     }
 
     private void initUI() {
@@ -211,7 +211,7 @@ public class FloatingWindowService extends Service implements FloatingWindowMedi
         this.youtubeWeb.setBackgroundColor(this.getResources().getColor(R.color.color_FF000000));
         this.youtubeWeb.getSettings().setJavaScriptEnabled(true);
         this.youtubeWeb.getSettings().setMediaPlaybackRequiresUserGesture(false);
-        this.youtubeWeb.addJavascriptInterface(this.javaScriptInterface, "Android");
+        this.youtubeWeb.addJavascriptInterface(this.JSPlayerInterface, "Android");
 
         this.youtubeWeb.setWebViewClient(new WebViewClient() {
 
@@ -224,7 +224,7 @@ public class FloatingWindowService extends Service implements FloatingWindowMedi
             @Override
             public void onPageFinished(WebView view, String url) {
                 logUtil.i("url: " + url);
-                javaScriptInterface.executeJSMediaPlayerLoadVideo();
+                JSPlayerInterface.executeJSMediaPlayerLoadVideo();
             }
 
             @Override
@@ -431,15 +431,13 @@ public class FloatingWindowService extends Service implements FloatingWindowMedi
 
             @Override
             public void run() {
+                String index = Integer.toString(playlistManager.getCurrentIndex() + 1);
+                String info = getString(R.string.notification_text_info, index, playlistManager.getCurrentItem().getSnippet().getTitle());
+
+                showNotification(true);
+                mediaInfoText.setText(info);
                 youtubeWeb.clearCache(true);
                 youtubeWeb.reload();
-
-                String index = Integer.toString(playlistManager.getCurrentIndex() + 1);
-                String videoInfo = "曲目: " + index + " - " + playlistManager.getCurrentItem().getSnippet().getTitle();
-                mediaInfoText.setText(videoInfo);
-
-                updateNotification(videoInfo);
-
                 rootView.blockPlayAndPause(true);
             }
         });
@@ -451,6 +449,19 @@ public class FloatingWindowService extends Service implements FloatingWindowMedi
             @Override
             public void run() {
                 rootView.updateThemeColor();
+            }
+        });
+    }
+
+    private void onScreenOff() {
+        this.mediaPlayerHandler.post(new Runnable() {
+
+            @Override
+            public void run() {
+                pause();
+                blockPlayAndPauseBtn(false);
+                rootView.showPlayBtn(false);
+                removeDisplayCurrentTimeRunnable();
             }
         });
     }
@@ -477,41 +488,14 @@ public class FloatingWindowService extends Service implements FloatingWindowMedi
         this.youtubeWeb.removeCallbacks(displayCurrentTimeRunnable);
     }
 
-    private void showNotification() {
-        StringBuilder sb = new StringBuilder();
-        String index = Integer.toString(playlistManager.getCurrentIndex() + 1);
-        sb.append("曲目: ").append(index).append(" - ").append(playlistManager.getCurrentItem().getSnippet().getTitle());
-
-        NotificationCompat.Builder nfBuilder = new NotificationCompat.Builder(this);
-        nfBuilder.setSmallIcon(R.drawable.ic_clef_note);
-        nfBuilder.setContentTitle("Cadenza - 目前聆賞的曲目");
-        nfBuilder.setContentText(sb.toString());
-
-        Intent resultIntent = new Intent(this, SplashActivity.class);
-        TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);
-        stackBuilder.addParentStack(SplashActivity.class);
-        stackBuilder.addNextIntent(resultIntent);
-
-        PendingIntent resultPendingIntent = stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
-        nfBuilder.setContentIntent(resultPendingIntent);
-        NotificationManager mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-        mNotificationManager.notify(NOTIFICATION_ID, nfBuilder.build());
-        startForeground(NOTIFICATION_ID, nfBuilder.build());
-    }
-
-    private void updateNotification(String videoInfo) {
-        NotificationManager nfManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-        NotificationCompat.Builder nfBuilder = (NotificationCompat.Builder) new NotificationCompat.Builder(this)
-                .setContentTitle("Cadenza - 目前聆賞的曲目")
-                .setContentText(videoInfo)
-                .setSmallIcon(R.drawable.ic_clef_note);
-        nfManager.notify( NOTIFICATION_ID, nfBuilder.build());
+    private void showNotification(boolean isUpdate) {
+        this.notificationHelper.showNotification(this, isUpdate);
     }
 
     /**
      * Inner Classes
      */
-    private class JavaScriptInterface {
+    private class JSPlayerInterface {
         private static final int JS_PLAYER_CALLBACK_UNSTARTED_STATUS = -1;
         private static final int JS_PLAYER_CALLBACK_ENDED_STATUS = 10;
         private static final int JS_PLAYER_CALLBACK_PLAYING_STATUS = 11;
@@ -522,7 +506,7 @@ public class FloatingWindowService extends Service implements FloatingWindowMedi
         private Context mContext;
         private int seekBarDurationInfo;
 
-        JavaScriptInterface(Context c) {
+        JSPlayerInterface(Context c) {
             mContext = c;
         }
 
@@ -536,63 +520,65 @@ public class FloatingWindowService extends Service implements FloatingWindowMedi
         public void showCurrentPlayerStatus(final String status) {
             logUtil.i("current status: " + status);
 
-            int passedStatus = Integer.valueOf(status);
-            blockPlayAndPauseBtn(true);
+            if (isScreenOff) {
+                onScreenOff();
+            } else {
+                int passedStatus = Integer.valueOf(status);
+                blockPlayAndPauseBtn(true);
 
-            switch (passedStatus) {
-                case JS_PLAYER_CALLBACK_UNSTARTED_STATUS:
-                    removeDisplayCurrentTimeRunnable();
-                    break;
+                switch (passedStatus) {
+                    case JS_PLAYER_CALLBACK_UNSTARTED_STATUS:
+                        removeDisplayCurrentTimeRunnable();
+                        break;
 
-                case JS_PLAYER_CALLBACK_ENDED_STATUS:
-                    if (isShuffleMode) {
-                        if (isRepeatOneMode) {
-                            updateVideoId(MEDIA_PLAYER_STATUS_REPEAT);
+                    case JS_PLAYER_CALLBACK_ENDED_STATUS:
+                        if (isShuffleMode) {
+                            if (isRepeatOneMode) {
+                                updateVideoId(MEDIA_PLAYER_STATUS_REPEAT);
+                            } else {
+                                updateVideoId(MEDIA_PLAYER_STATUS_SHUFFLE);
+                            }
                         } else {
-                            updateVideoId(MEDIA_PLAYER_STATUS_SHUFFLE);
+                            if (isRepeatOneMode) {
+                                updateVideoId(MEDIA_PLAYER_STATUS_REPEAT);
+                            } else {
+                                updateVideoId(MEDIA_PLAYER_STATUS_NEXT);
+                            }
                         }
-                    } else {
-                        if (isRepeatOneMode) {
-                            updateVideoId(MEDIA_PLAYER_STATUS_REPEAT);
-                        } else {
-                            updateVideoId(MEDIA_PLAYER_STATUS_NEXT);
-                        }
-                    }
+                        removeDisplayCurrentTimeRunnable();
+                        break;
 
-                    removeDisplayCurrentTimeRunnable();
-                    break;
+                    case JS_PLAYER_CALLBACK_PLAYING_STATUS:
+                        mediaPlayerHandler.post(new Runnable() {
 
-                case JS_PLAYER_CALLBACK_PLAYING_STATUS:
-                    mediaPlayerHandler.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                blockPlayAndPauseBtn(false);
+                                rootView.showPlayBtn(true);
+                            }
+                        });
+                        break;
 
-                        @Override
-                        public void run() {
-                            blockPlayAndPauseBtn(false);
-                            rootView.showPlayBtn(true);
-                        }
-                    });
-                    break;
+                    case JS_PLAYER_CALLBACK_PAUSED_STATUS:
+                        mediaPlayerHandler.post(new Runnable() {
 
-                case JS_PLAYER_CALLBACK_PAUSED_STATUS:
-                    mediaPlayerHandler.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                blockPlayAndPauseBtn(false);
+                                rootView.showPlayBtn(false);
+                                removeDisplayCurrentTimeRunnable();
+                            }
+                        });
+                        break;
 
-                        @Override
-                        public void run() {
-                            blockPlayAndPauseBtn(false);
-                            rootView.showPlayBtn(false);
-                        }
-                    });
+                    case JS_PLAYER_CALLBACK_BUFFERING_STATUS:
+                        removeDisplayCurrentTimeRunnable();
+                        break;
 
-                    removeDisplayCurrentTimeRunnable();
-                    break;
-
-                case JS_PLAYER_CALLBACK_BUFFERING_STATUS:
-                    removeDisplayCurrentTimeRunnable();
-                    break;
-
-                case JS_PLAYER_CALLBACK_CUED_STATUS:
-                    removeDisplayCurrentTimeRunnable();
-                    break;
+                    case JS_PLAYER_CALLBACK_CUED_STATUS:
+                        removeDisplayCurrentTimeRunnable();
+                        break;
+                }
             }
         }
 
@@ -618,20 +604,29 @@ public class FloatingWindowService extends Service implements FloatingWindowMedi
         /**
          * Public Method Area: For calling JS Media Player
          */
+        public int getDuration() {
+            return this.seekBarDurationInfo;
+        }
+
         public void executeJSMediaPlayerLoadVideo() {
-            youtubeWeb.loadUrl("javascript:init('" + videoId + "', '" + playListId + "')");
+            this.executeJSPlayerOperationsOnMainThread("javascript:init('" + videoId + "', '" + playListId + "')");
         }
 
         public void executeJSMediaPlayerPlay() {
-            youtubeWeb.loadUrl("javascript:playJSPlayerVideo()");
+            this.executeJSPlayerOperationsOnMainThread("javascript:playJSPlayerVideo()");
         }
 
         public void executeJSMediaPlayerPause() {
-            youtubeWeb.loadUrl("javascript:pauseJSPlayerVideo()");
+            this.executeJSPlayerOperationsOnMainThread("javascript:pauseJSPlayerVideo()");
         }
 
-        public int getDuration() {
-            return this.seekBarDurationInfo;
+        public void executeJSPlayerOperationsOnMainThread(final String javascriptCommand) {
+            mediaPlayerHandler.post(new Runnable() {
+                @Override
+                public void run() {
+                    youtubeWeb.loadUrl(javascriptCommand);
+                }
+            });
         }
     }
 
@@ -661,9 +656,9 @@ public class FloatingWindowService extends Service implements FloatingWindowMedi
 
         @Override
         public void onStopTrackingTouch(SeekBar seekBar) {
-            final long playedLength = (javaScriptInterface.getDuration() * this.finalProgress) / 100;
+            final long playedLength = (JSPlayerInterface.getDuration() * this.finalProgress) / 100;
 
-            logUtil.i("OnSeekBarChangeListener::duration - " + javaScriptInterface.getDuration());
+            logUtil.i("OnSeekBarChangeListener::duration - " + JSPlayerInterface.getDuration());
             logUtil.i("OnSeekBarChangeListenerlength::playedLength - " + playedLength);
 
             executeVideoSeekTo((int) playedLength);
@@ -674,8 +669,14 @@ public class FloatingWindowService extends Service implements FloatingWindowMedi
 
         @Override
         public void onReceive(Context context, Intent intent) {
-            if (intent.getAction().equals(SERVICE_CHANGE_COLOR)) {
+            String action = intent.getAction();
+            if (action.equals(SERVICE_CHANGE_COLOR)) {
                 updateThemeColor();
+            } else if (action.equals(ACTION_SCREEN_ON)) {
+                isScreenOff = false;
+            } else if (action.equals(ACTION_SCREEN_OFF)) {
+                isScreenOff = true;
+                onScreenOff();
             }
         }
     }

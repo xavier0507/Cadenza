@@ -16,12 +16,14 @@ public class PlaylistManager {
     private static PlaylistManager instance;
     private static List<PlaylistItem> itemList;
     private static int currentPlayingItemIndex;
+    private static String currentComposer;
 
     static {
         logUtil = LogUtil.getInstance(FragmentStackManager.class);
         instance = null;
         itemList = null;
         currentPlayingItemIndex = 0;
+        currentComposer = "";
     }
 
     public static synchronized final PlaylistManager getInstance() {
@@ -98,6 +100,12 @@ public class PlaylistManager {
         logUtil.i("PlaylistManager::setCurrentPlayingItemIndex() - currentPlayingItemIndex: " + playingItemIndex);
     }
 
+    public void setCurrentComposer(String composer) {
+        currentComposer = composer;
+
+        logUtil.i("PlaylistManager::setCurrentComposer() - currentComposer: " + currentComposer);
+    }
+
     public PlaylistItem getCurrentItem() {
         return itemList.get(currentPlayingItemIndex);
     }
@@ -108,6 +116,10 @@ public class PlaylistManager {
 
     public int getItemListSize() {
         return itemList.size();
+    }
+
+    public String getCurrentComposer() {
+        return currentComposer;
     }
 
     private boolean isItemListEmpty() {

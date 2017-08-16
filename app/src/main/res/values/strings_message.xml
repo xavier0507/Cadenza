@@ -30,4 +30,9 @@
     <string name="toast_video_repeat_one_mode">單曲循環模式</string>
     <string name="toast_video_loop_all_mode">全曲循環模式</string>
 
+    <!-- Notification -->
+    <string name="notification_title">*** 目前聆賞 ***</string>
+    <string name="notification_info" formatted="false">列表: %1s\n曲目: %2s - %3s</string>
+    <string name="notification_text_info" formatted="false">曲目: %1s - %2s</string>
+
 </resources>

@@ -6,6 +6,7 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+    <uses-permission android:name="android.permission.RECEIVE_SMS" />
 
     <application
         android:name=".controller.activity.app.CadenzaApplication"
@@ -34,8 +35,6 @@
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
 
-        <service android:name=".controller.service.FloatingWindowService" />
-
         <activity
             android:name=".controller.activity.common.unused.SearchResultsActivity"
             android:launchMode="singleTop"
@@ -54,6 +53,8 @@
                 android:name="android.app.searchable"
                 android:resource="@xml/searchable" />
         </activity>
+
+        <service android:name=".controller.service.FloatingWindowService" />
 
         <meta-data
             android:name="android.app.default_searchable"
