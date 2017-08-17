@@ -2,9 +2,8 @@
 <resources>
 
     <item name="media_player_panel_background" type="id" />
-
     <item name="youtube_player_view" type="id" />
-
     <item name="progress_bar_id" type="id" />
+    <item name="attached_root" type="id" />
 
 </resources>

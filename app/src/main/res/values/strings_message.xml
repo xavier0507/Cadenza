@@ -24,4 +24,15 @@
     <string name="toast_check_account_need_google_play_service">Cadenza需要Google Play Services。請在您的手機上安裝並重新啟動Cadenza。</string>
     <string name="toast_check_account_need_account_picker_fail">Cadenza需要您登入Google帳號，才能存取服務。</string>
 
+    <!-- Toast Message for Video -->
+    <string name="toast_video_shuffle_mode">隨機播放開啟</string>
+    <string name="toast_video_sequence_mode">循序播放開啟</string>
+    <string name="toast_video_repeat_one_mode">單曲循環模式</string>
+    <string name="toast_video_loop_all_mode">全曲循環模式</string>
+
+    <!-- Notification -->
+    <string name="notification_title">*** 目前聆賞 ***</string>
+    <string name="notification_info" formatted="false">列表: %1s\n曲目: %2s - %3s</string>
+    <string name="notification_text_info" formatted="false">曲目: %1s - %2s</string>
+
 </resources>

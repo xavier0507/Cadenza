@@ -3,6 +3,7 @@ package xy.hippocampus.cadenza.controller.manager;
 import com.google.api.services.youtube.model.PlaylistItem;
 
 import java.util.List;
+import java.util.Random;
 
 import xy.hippocampus.cadenza.util.LogUtil;
 
@@ -15,12 +16,14 @@ public class PlaylistManager {
     private static PlaylistManager instance;
     private static List<PlaylistItem> itemList;
     private static int currentPlayingItemIndex;
+    private static String currentComposer;
 
     static {
         logUtil = LogUtil.getInstance(FragmentStackManager.class);
         instance = null;
         itemList = null;
         currentPlayingItemIndex = 0;
+        currentComposer = "";
     }
 
     public static synchronized final PlaylistManager getInstance() {
@@ -63,6 +66,26 @@ public class PlaylistManager {
         return itemList.get(currentPlayingItemIndex).getContentDetails().getVideoId();
     }
 
+    public String shuffleItem() {
+        if (this.isItemListEmpty()) {
+            throw new NullPointerException("請檢查播放列表是否為空。");
+        }
+
+        Random random = new Random();
+        int randomPlayIndex = random.nextInt(this.getItemListSize());
+        this.setCurrentPlayingItemIndex(randomPlayIndex);
+
+        return itemList.get(currentPlayingItemIndex).getContentDetails().getVideoId();
+    }
+
+    public String repeatItem() {
+        if (this.isItemListEmpty()) {
+            throw new NullPointerException("請檢查播放列表是否為空。");
+        }
+
+        return itemList.get(currentPlayingItemIndex).getContentDetails().getVideoId();
+    }
+
     public void setItemList(List<PlaylistItem> playlistItems) {
         if (playlistItems == null) {
             throw new IllegalArgumentException("playlistItems為空物件");
@@ -77,12 +100,26 @@ public class PlaylistManager {
         logUtil.i("PlaylistManager::setCurrentPlayingItemIndex() - currentPlayingItemIndex: " + playingItemIndex);
     }
 
+    public void setCurrentComposer(String composer) {
+        currentComposer = composer;
+
+        logUtil.i("PlaylistManager::setCurrentComposer() - currentComposer: " + currentComposer);
+    }
+
     public PlaylistItem getCurrentItem() {
         return itemList.get(currentPlayingItemIndex);
     }
 
+    public int getCurrentIndex() {
+        return currentPlayingItemIndex;
+    }
+
     public int getItemListSize() {
         return itemList.size();
+    }
+
+    public String getCurrentComposer() {
+        return currentComposer;
     }
 
     private boolean isItemListEmpty() {

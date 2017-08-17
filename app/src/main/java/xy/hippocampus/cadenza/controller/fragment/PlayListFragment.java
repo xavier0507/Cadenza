@@ -1,12 +1,9 @@
 package xy.hippocampus.cadenza.controller.fragment;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.graphics.Color;
-import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -34,6 +31,7 @@ import xy.hippocampus.cadenza.controller.fragment.base.BaseFragment;
 import xy.hippocampus.cadenza.controller.manager.FragmentStackManager;
 import xy.hippocampus.cadenza.controller.manager.GoogleAccountManager;
 import xy.hippocampus.cadenza.controller.manager.PlaylistManager;
+import xy.hippocampus.cadenza.controller.service.FloatingWindowService;
 import xy.hippocampus.cadenza.controller.ytapi.base.IAsyncTaskActCallback;
 import xy.hippocampus.cadenza.controller.ytapi.playlist.facade.PlaylistApi;
 import xy.hippocampus.cadenza.model.bean.MainListItemInfo;
@@ -43,7 +41,6 @@ import xy.hippocampus.cadenza.view.SquareImageView;
 import static com.squareup.picasso.MemoryPolicy.NO_CACHE;
 import static com.squareup.picasso.MemoryPolicy.NO_STORE;
 import static xy.hippocampus.cadenza.controller.manager.GoogleAccountManager.REQUEST_AUTHORIZATION;
-import static xy.hippocampus.cadenza.model.constant.Constants.FRAG_MEDIA_PLAYER_PANEL_TAG;
 import static xy.hippocampus.cadenza.model.constant.Constants.FRAG_PLAYLIST_TAG;
 import static xy.hippocampus.cadenza.model.constant.IntentExtra.INTENT_EXTRA_COMPOSER_INFO;
 
@@ -59,8 +56,6 @@ public class PlayListFragment extends BaseFragment implements
     private static final float PERCENTAGE_TO_SHOW_TITLE_AT_TOOLBAR = 0.9f;
     private static final float PERCENTAGE_TO_HIDE_TITLE_DETAILS = 0.3f;
     private static final int ALPHA_ANIMATIONS_DURATION = 200;
-
-    private PlaylistManager playlistManager = PlaylistManager.getInstance();
 
     private boolean isTheTitleVisible;
     private boolean isTheTitleContainerVisible = true;
@@ -86,6 +81,7 @@ public class PlayListFragment extends BaseFragment implements
 
     private MainListItemInfo mainListItemInfo;
     private PlaylistApi playlistApi;
+    private PlaylistManager playlistManager = PlaylistManager.getInstance();
 
     private List<PlaylistItem> currentPlaylistItems;
 
@@ -111,6 +107,7 @@ public class PlayListFragment extends BaseFragment implements
         if (this.getArguments() != null) {
             this.logUtil.i("acquireComposerInfo");
             this.mainListItemInfo = (MainListItemInfo) this.getArguments().getSerializable(INTENT_EXTRA_COMPOSER_INFO);
+            this.playlistManager.setCurrentComposer(this.mainListItemInfo.getSubTitle());
         }
 
         this.playlistApi = PlaylistApi.getInstance(this.getActivity(), GoogleAccountManager.getInstance(this.getActivity()).getCredential());
@@ -242,19 +239,24 @@ public class PlayListFragment extends BaseFragment implements
             playlistManager.setCurrentPlayingItemIndex(position);
         }
 
-        FragmentManager fragmentManager = this.getActivity().getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        Intent intent = new Intent(this.getActivity(), FloatingWindowService.class);
+        intent.putExtra(IntentExtra.INTENT_EXTRA_PLAYLIST_ID, param.getSnippet().getPlaylistId());
+        intent.putExtra(IntentExtra.INTENT_EXTRA_PLAYLIST_VIDEO_ID, param.getContentDetails().getVideoId());
+        this.getActivity().startService(intent);
 
-        Fragment fragment = new MediaPlayerPanelFragment();
-        FragmentStackManager.getInstance().pushFragment(FRAG_MEDIA_PLAYER_PANEL_TAG, fragment);
-
-        Bundle bundle = new Bundle();
-        bundle.putString(IntentExtra.INTENT_EXTRA_PLAYLIST_VIDEO_ID, param.getContentDetails().getVideoId());
-        fragment.setArguments(bundle);
-        fragmentTransaction
-                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
-                .replace(R.id.frag_media_player, fragment, FRAG_MEDIA_PLAYER_PANEL_TAG)
-                .commit();
+//        FragmentManager fragmentManager = this.getActivity().getSupportFragmentManager();
+//        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+//
+//        Fragment fragment = new MediaPlayerPanelFragment();
+//        FragmentStackManager.getInstance().pushFragment(FRAG_MEDIA_PLAYER_PANEL_TAG, fragment);
+//
+//        Bundle bundle = new Bundle();
+//        bundle.putString(IntentExtra.INTENT_EXTRA_PLAYLIST_VIDEO_ID, param.getContentDetails().getVideoId());
+//        fragment.setArguments(bundle);
+//        fragmentTransaction
+//                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+//                .replace(R.id.frag_media_player, fragment, FRAG_MEDIA_PLAYER_PANEL_TAG)
+//                .commit();
     }
 
     private void handleAlphaOnTitle(float percentage) {

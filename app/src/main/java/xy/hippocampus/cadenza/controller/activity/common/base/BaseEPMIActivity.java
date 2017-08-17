@@ -18,7 +18,6 @@ import pub.devrel.easypermissions.EasyPermissions;
 import xy.hippocampus.cadenza.BuildConfig;
 import xy.hippocampus.cadenza.R;
 import xy.hippocampus.cadenza.controller.activity.app.CadenzaApplication;
-import xy.hippocampus.cadenza.controller.activity.common.SplashActivity;
 import xy.hippocampus.cadenza.controller.manager.GoogleAccountManager;
 import xy.hippocampus.cadenza.controller.manager.PrefsManager;
 import xy.hippocampus.cadenza.util.AppInfoUtil;
