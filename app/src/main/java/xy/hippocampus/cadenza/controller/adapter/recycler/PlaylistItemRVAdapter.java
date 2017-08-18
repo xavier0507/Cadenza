@@ -53,8 +53,6 @@ public class PlaylistItemRVAdapter extends BaseRVAdapter<PlaylistItem> {
             Picasso.with(playlistItemRVH.thumbnailImageView.getContext())
                     .load(photoUrl)
                     .error(R.drawable.bg_oops)
-//                    .networkPolicy(NetworkPolicy.NO_STORE)
-//                    .memoryPolicy(NO_CACHE, NO_STORE)
                     .resize(120, 80)
                     .centerCrop()
                     .into(playlistItemRVH.thumbnailImageView);
